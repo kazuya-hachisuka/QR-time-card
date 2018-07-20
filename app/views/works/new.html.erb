@@ -1,0 +1,75 @@
+<div class="container">
+	<div class="row justify-content-center mt-md-5">
+	  <div class="col-lg-9">
+	    <div class="card mt-5 mt-sm-2 shadow-lg" style="width:　20em;">
+	      <div class="card-header text-center" style="background-color:#F39800;">店舗名</div>
+
+	      <div id="day" class="m-3 text-center"></div>
+
+	      <div id="clock" class="text-center"style="padding:5px;"></div>
+
+	      <p class="text-center font-weight-bold mt-2">
+	      	<%= @staff.family_name %>
+	      	<%= @staff.given_name %>
+	      	</p>
+
+	        <div class="inline-group text-center">
+
+					<% if @staff.worked %>
+
+					<% else @staff.status == 0 %>
+
+						  <%= link_to  staff_works_path(params[:staff_id]), class:"btn btn-outline-info badge-pill mb-3 col-1", method: :post do %>
+						  出勤
+						  <% end %>
+
+					<% end %>
+
+						<% if @staff.status == 1 %>
+
+							<% work = Work.all.where(out: nil) %>
+
+							  <% work.each do |f| %>
+
+							  	<%= link_to staff_work_break_in_path([@staff.id],[f.id]), {:controller => "works", :action => "breaks_create", class:"btn btn-success badge-pill mb-3 col-1", method: :post} do %>
+							  	休憩
+							  	<% end %>
+
+							  	<%= link_to  staff_shift_out_path(params[:staff_id],f.id),class:"btn btn-danger badge-pill mb-3 col-1", method: :patch do %>
+							  	退勤
+							  	<% end %>
+
+								<% end %>
+
+						<% elsif @staff.status == 2 %>
+
+							<% work = Work.all.where(out: nil) %>
+
+								<% work.each do |f| %>
+
+									<%= link_to '戻り',staff_work_break_out_path([@staff.id],[f.id]), class:"btn btn-warning badge-pill mb-3 col-1", method: :patch %>
+
+								<% end %>
+
+						<% else %>
+
+							<% work = Work.all.where(out: nil) %>
+
+						 		<% work.each do |f| %>
+
+
+						    	<%= link_to  staff_shift_out_path(params[:staff_id],f.id),class:"btn btn-danger badge-pill mb-3 col-1", method: :patch do %>
+						    	退勤
+						    	<% end %>
+
+								<% end %>
+
+
+						<% end %>
+
+	        </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+<script type="text/javascript"></script>

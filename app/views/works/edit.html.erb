@@ -1,0 +1,39 @@
+<p><% @staff.family_name %>
+	      	<% @staff.given_name %></p>
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="card-deck m-2">
+			<%= form_for ([@staff, @work]) do |f| %>
+					<div class="card border-light shadow-lg">
+						<div class="card-header text-white" style="background-color:#F08300;">
+							<span class="card-title">出勤</span>
+						</div>
+							<div class="card-body bg-light">
+								<p class="card-text">出勤<%= f.datetime_select :in, :use_month_numbers => true , class: "form-control" %></p>
+								<p class="card-text">退勤<%= f.datetime_select :out, :use_month_numbers => true, class: "form-control" %></p>
+								<%= link_to "削除", staff_work_path(@work),method: :delete ,data: {confirm: '本当に削除しますか??'}, class:"btn btn-outline-danger badge-pill btn-sm" %>
+							</div>
+					</div>
+		</div>
+			<%= f.fields_for :breaks do |t| %>
+				<div class="card-deck m-2">
+					<div class="card border-light shadow-lg">
+						<div class="card-header text-white" style="background-color:#009944;">
+							<span class="card-title">休憩</span>
+							</div>
+							<div class="card-body bg-light" >
+									<p class="card-text">休憩<%= t.datetime_select :break_in, :use_month_numbers => true , class: "form-control" %></p>
+									<p class="card-text">戻り<%= t.datetime_select :break_out, :use_month_numbers => true,:include_blank => true, class: "form-control" %></p>
+									<%= link_to "削除", staff_work_breaks_path(params[:staff_id],[@work],[@breaks]),method: :delete ,data: {confirm: '本当に削除しますか??'}, class:"btn btn-outline-danger badge-pill btn-sm" %>
+							</div>
+					</div>
+				</div>
+			<% end %>
+			<div class="container">
+				<%= f.submit '更新', class:"btn btn-outline-info", method: :patch %>
+
+			<% end %>
+</div>
+		</div>
+	</div>
+</div>

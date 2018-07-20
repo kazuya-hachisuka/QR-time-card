@@ -1,0 +1,70 @@
+<h1>Works#show</h1>
+<table class="table table-sm">
+	<p>
+		<% @staff.family_name %>
+	      	<% @staff.given_name %>
+	</p>
+	<thead>
+		<tr>
+			<th>id</th>
+			<th>in</th>
+			<th>out</th>
+			<th>勤務時間</th>
+			<th>休憩時間</th>
+			<th>深夜時間</th>
+			<th>総労働時間</th>
+			<th>編集</th>
+		</tr>
+	</thead>
+
+	<% @staff.works do |workday| %>
+
+		<tbody>
+			<tr>
+				<td><%= workday.id %></td>
+				<td><%= workday.in.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
+
+			<% if workday.out.present?  %>
+
+				<td><%= workday.out.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
+				<td>
+					<% sec = (workday.out.to_time - workday.in.to_time) %>
+					<%= h_mm(sec) %>
+				</td>
+
+			<% else %>
+
+				<td>未退勤です</td>
+
+			<% end %>
+
+			<% if workday.breaks.present? %>
+				<td>
+
+					<% time = 0 %>
+
+					<% workday.breaks.each do |break_time| %>
+						<% sec = (break_time.break_out.to_time - break_time.break_in.to_time) %>
+						<% time += sec %>
+					<% end %>
+
+  				<%= h_mm(time) %>
+  				<!-- /<#%= time %> -->
+				</td>
+				<td>深夜</td>
+				<td><%= h_mm(sec - time) %></td>
+
+			<% else %>
+
+				<td>無し</td>
+				<td>深夜</td>
+				<td><%= h_mm(sec) %></td>
+
+			<% end %>
+
+			</tr>
+		</tbody>
+
+	<% end %>
+
+</table>
