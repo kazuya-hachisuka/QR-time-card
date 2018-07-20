@@ -58,3 +58,8 @@ gem 'bootstrap', '~>4.1.1'
 # gem 'bootstrap-sass'
 gem 'jquery-rails'
 # gem 'autoprefixer-rails'
+gem 'rqrcode'
+gem 'rmagick', :require => 'RMagick'
+gem 'chunky_png'
+gem 'rqrcode_png'
+
