@@ -1,0 +1,51 @@
+ <div class="container pt-4">
+  <div class="row justify-content-center">
+    <div class="card-grope">
+      <div class="card border-secondary shadow-lg m-2" >
+        <div class="card-header" style="background-color:#fb8303;">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <span class="nav-link active font-weight-bold lead" style="background-color:#fb8303;">店舗一覧</span>
+            </li>
+            <li class="nav-item">
+
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>店舗名</th>
+                <th>在籍スタッフ</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+            <% @store.each do |store|%>
+                <th><%= store.store_name%></td>
+              <% if store.staffs.present? %>
+                <td class="text-center"><%= store.staffs.count %>名</td>
+
+              <% else %>
+
+              <td class="text-center">-名</td>
+
+              <% end %>
+              <td><%= link_to "店舗詳細",store_path(store.id), class:"btn btn-info btn-sm" %></td>
+              </tr>
+            <% end %>
+
+
+            </tbody>
+
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

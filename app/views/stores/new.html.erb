@@ -1,0 +1,21 @@
+<div class="container py-4 mb-5">
+		<div class="row justify-content-center">
+			<div class="card shadow-lg border-darks w-75 ">
+				<div class="card-header text-center h4" style="background-color:#fb8303;">
+					<b class="">店舗追加</b></div>
+				<div class="card-body">
+					<%= form_for @store  do |f| %>
+						<div class="form-group">
+							<p class="badge badge-light">店舗名</p>
+						<%= f.text_field :store_name, class:"form-control" %>
+
+							<%= f.submit '作成', class:"btn btn-outline-info mt-3 btn-sm" %>
+
+					<% end %>
+
+						</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
