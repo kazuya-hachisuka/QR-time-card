@@ -1,0 +1,27 @@
+<div class="container py-4 mb-5">
+		<div class="row justify-content-center">
+			<div class="card shadow-lg border-darks w-75">
+				<div class="card-header text-center h4 font-weight-bold" style="background-color:#fb8303;">スタッフ追加</div>
+				<div class="card-body">
+					<%= form_for @staff, url:staffs_path do |f| %>
+						<div class="form-group">
+							<p class="badge badge-light">名前(姓)</p>
+						<%= f.text_field :family_name, class:"form-control" %>
+							<p class="badge badge-light">名前(名)</p>
+						<%= f.text_field :given_name, class:"form-control" %>
+							<p class="badge badge-light">名前カナ(セイ)</p>
+							<%= f.text_field :family_name_kana, class:"form-control" %>
+							<p class="badge badge-light">名前カナ(メイ)</p>
+							<%= f.text_field :given_name_kana, class:"form-control" %>
+							<p class="badge badge-light">所属店舗</p>
+								<%= f.collection_select :store_id ,@store ,:id ,:store_name ,{:include_blank => true}, {class:"form-control"} %>
+								<%= f.submit '追加', class:"btn btn-outline-info mt-3" %>
+
+					<% end %>
+
+						</div>
+
+				</div>
+			</div>
+		</div>
+	</div>

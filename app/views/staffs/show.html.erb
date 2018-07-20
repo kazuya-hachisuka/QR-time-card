@@ -1,0 +1,132 @@
+<div class="container-fluid py-4">
+	<div class="row">
+			<div  class="d-inline-block">
+				<div class="card shadow-lg border-dark ml-3" style="width:18rem;">
+					<h3 class="card-header text-center font-weight-bold" style="background-color:#fb8303;">
+						<%= @staff.family_name %>
+						<%= @staff.given_name %>
+					</h3>
+					<div class="card-body text-center">
+						<%=  image_tag @qrpng ,class:"img-thumbnail mx-auto"%>
+					</div>
+					<div class="card-footer text-center ">
+						<p>所属店舗</p>
+						<b><%= @staff.store.store_name %></b>
+					</div>
+				</div>
+			<button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#ModalCenter">編集</button>
+
+	    	<!-- モーダルの設定 -->
+		    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+		      <div class="modal-dialog modal-dialog-centered" role="document">
+		        <div class="modal-content">
+		          <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+		              <span aria-hidden="true">&times;</span>
+		            </button>
+		          </div>
+
+		          <div class="modal-body">
+
+		          	<%= render 'staffs/edit', staff:@staff %>
+
+		          </div>
+
+		          <div class="modal-footer">
+		              <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+		          </div>
+
+		        </div>
+
+		      </div>
+		    </div>
+			</div>
+
+			<div class="d-inline-block">
+				<div class="card shadow-lg border-dark ml-3" style="width:50rem;">
+			    <div class="card-header lead" style="background-color:#fb8303;">
+				    <span><%= @staff.store.store_name %></span>
+				    <span>?月</span>
+				  </div>
+				    <div class="card-body bg-light">
+					    <span class="">
+					    	<%= @staff.family_name %>
+						    <%= @staff.given_name %>
+						  </span>
+			  		</div>
+
+			    <table class="table table-hover">
+			      <thead class="bg-light">
+			        <tr>
+			          <th>編集</th>
+								<th>id</th>
+								<th>シフトin</th>
+								<th>シフトout</th>
+								<th>勤務時間</th>
+								<th>休憩時間</th>
+								<th>深夜時間</th>
+								<th>総労働時間</th>
+			        </tr>
+			      </thead>
+
+						<% @staff.works.each do |workday| %>
+
+							<tbody>
+								<tr>
+									<th><%= link_to 'edit',edit_staff_work_path(@staff,workday.id), class: 'btn btn-outline-info btn-sm' %></th>
+									<td><%= workday.id %></td>
+									<td><%= workday.in.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
+
+								<% if workday.out.present?  %>
+
+									<td><%= workday.out.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
+									<td>
+										<% sec = (workday.out.in_time_zone - workday.in.in_time_zone) %>
+										<%= h_mm(sec) %>
+									</td>
+
+								<% else %>
+
+									<td>未退勤です</td>
+
+								<% end %>
+
+								<% if @break_out.present? %>
+									<td>
+										<% time = 0 %>
+
+										<% workday.breaks.each do |break_time| %>
+											<% off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone) %>
+											<% time += off_time %>
+										<% end %>
+
+										<%= h_mm(time) %>
+									</td>
+									<td>深夜</td>
+									<td><%= h_mm(sec - time) %></td>
+
+								<% else %>
+
+									<td>無し</td>
+									<td>深夜</td>
+									<td><%= h_mm(sec) %></td>
+
+								<% end %>
+
+
+
+								</tr>
+							</tbody>
+
+						<% end %>
+
+					</table>
+		  	</div>
+			</div>
+	</div>
+	<div  class="container">
+		<div class="row">
+
+		</div>
+	</div>
+</div>
