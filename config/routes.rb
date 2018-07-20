@@ -9,7 +9,20 @@ Rails.application.routes.draw do
   resources :stores,only:[:index,:show,:new,:create,:update,:destroy]
 
   resources :staffs, only:[:create,:new,:show,:update,:destroy] do
+
+    resources :works,only:[:create,:new,:update,:index,:edit,:destroy]
+
+    post 'works/:work_id/breaks' => 'works#break_create', as:'work_break_in'
+
+    patch 'works/:work_id/breaks' => 'works#break_update', as:'work_break_out'
+
+    delete 'work/:work_id/breaks' => 'works#break_destroy', as: 'work_breaks'
+
+    patch 'work_edit/:work_id/' => 'works#shift_out', as:'shift_out'
+
   end
+
+  get 'staffs/:staff_id/works/show' => 'works#show'
 
   get 'cameras/show' => 'cameras#show' #instascan モバイル用
 
