@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  break_in: 2018-07-20 10:30:14
+  break_out: 2018-07-20 10:30:14
+  work_id: 1
+
+two:
+  break_in: 2018-07-20 10:30:14
+  break_out: 2018-07-20 10:30:14
+  work_id: 1
