@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180719075423) do
+ActiveRecord::Schema.define(version: 20180720082815) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -34,6 +34,31 @@ ActiveRecord::Schema.define(version: 20180719075423) do
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["is_main_administer"], name: "index_admins_on_is_main_administer"
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "staffs", force: :cascade do |t|
+    t.string "family_name", null: false
+    t.string "given_name", null: false
+    t.string "family_name_kana", null: false
+    t.string "given_name_kana", null: false
+    t.string "qrcode", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "work_id"
+    t.integer "store_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["family_name"], name: "index_staffs_on_family_name"
+    t.index ["family_name_kana"], name: "index_staffs_on_family_name_kana"
+    t.index ["given_name"], name: "index_staffs_on_given_name"
+    t.index ["given_name_kana"], name: "index_staffs_on_given_name_kana"
+    t.index ["status"], name: "index_staffs_on_status"
+  end
+
+  create_table "stores", force: :cascade do |t|
+    t.string "store_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["store_name"], name: "index_stores_on_store_name"
   end
 
 end
