@@ -3,7 +3,15 @@ Rails.application.routes.draw do
   	sessions: 'admins/sessions',
   	registrations: 'admins/registrations'
   }
+
+  root'cameras#show'
+
   resources :staffs, only:[:create,:new,:show,:update,:destroy] do
   end
+
+  get 'cameras/show' => 'cameras#show' #instascan モバイル用
+
+  get 'cameras/index' => 'cameras#index' #jsQR PC用
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
