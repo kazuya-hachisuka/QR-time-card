@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   get 'cameras/show' => 'cameras#show' #instascan モバイル用
 
   get 'cameras/index' => 'cameras#index' #jsQR PC用
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
