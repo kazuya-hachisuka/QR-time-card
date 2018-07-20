@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   	sessions: 'admins/sessions',
   	registrations: 'admins/registrations'
   }
+
+  root'cameras#show'
+
   resources :staffs, only:[:create,:new,:show,:update,:destroy] do
   end
 
