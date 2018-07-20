@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   root'cameras#show'
 
+  resources :stores,only:[:index,:show,:new,:create,:update,:destroy]
+
   resources :staffs, only:[:create,:new,:show,:update,:destroy] do
   end
 

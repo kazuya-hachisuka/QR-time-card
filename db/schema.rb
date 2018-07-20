@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180720090859) do
-
+ActiveRecord::Schema.define(version: 20180720082815) do
+  
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -43,10 +43,22 @@ ActiveRecord::Schema.define(version: 20180720090859) do
     t.string "given_name_kana", null: false
     t.string "qrcode", null: false
     t.integer "status", default: 0, null: false
-    t.integer "store_id", null: false
     t.integer "work_id"
+    t.integer "store_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["family_name"], name: "index_staffs_on_family_name"
+    t.index ["family_name_kana"], name: "index_staffs_on_family_name_kana"
+    t.index ["given_name"], name: "index_staffs_on_given_name"
+    t.index ["given_name_kana"], name: "index_staffs_on_given_name_kana"
+    t.index ["status"], name: "index_staffs_on_status"
+  end
+
+  create_table "stores", force: :cascade do |t|
+    t.string "store_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["store_name"], name: "index_stores_on_store_name"
   end
 
 end

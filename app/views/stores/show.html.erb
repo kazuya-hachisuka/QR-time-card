@@ -1,0 +1,87 @@
+<div class="container pt-4">
+  <h1>店舗詳細</h1>
+  <div class="row justify-content-center">
+    <div class="card-deck">
+
+
+      <div class="card border-secondary shadow-lg w-75">
+        <div class="card-header" style="background-color:#fb8303;">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <% if @store.staffs.present? %>
+              <span class="nav-link active font-weight-bold lead text-dark" style="background-color:#fb8303;"><%= @store.store_name%> (所属スタッフ数<%= @store.staffs.count %>名)</span>
+            </li>
+
+            <% else %>
+              <span class="nav-link active lead" style="background-color:#fb8303;"><%= @store.store_name%> (所属スタッフ数0名)</span>
+
+            <% end %>
+
+            <li class="nav-item">
+              <%= link_to "店舗一覧", stores_path, class:"nav-link text-secondary" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "勤怠一覧", stores_path, class:"nav-link text-secondary" %>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th class="text-secondary">スタッフ名</td>
+                </tr>
+              </thead>
+              <tbody>
+                <% if @store.staffs.present? %>
+
+                    <% @store.staffs.each do |staff| %>
+                  <tr>
+                    <td>
+                      <%= link_to "#{staff.family_name}#{staff.given_name}",staff_path(staff), class:"text-dark" %>
+                    </td>
+                      <% end %>
+                  </tr>
+                <% else %>
+
+                  <tr>
+                    <td>スタッフはいません</td>
+                  </tr>
+
+                <% end %>
+
+              </tbody>
+            </table>
+
+            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ModalCenter">編集</button>
+
+            <!-- モーダルの設定 -->
+            <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body">
+                    <%= render 'stores/edit', store:@store %>
+
+                  </div>
+
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
