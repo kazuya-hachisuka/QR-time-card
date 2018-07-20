@@ -1,0 +1,85 @@
+<h1>Works#index</h1>
+
+<div class="container pt-4">
+  <div class="row justify-content-center">
+    <div class="card shadow-lg" style="width:100rem;">
+	    <div class="card-header lead" style="background-color:#fb8303;">
+		    <span>勤務月</span>
+		    <span>店舗名</span>
+		  </div>
+		    <div class="card-body bg-light">
+			    <span class="">
+			    	<%= @staff.family_name %>
+				    <%= @staff.given_name %>
+				  </span>
+	  		</div>
+
+	    <table class="table table-hover">
+	      <thead class="bg-light">
+	        <tr>
+	          <th>編集</th>
+						<th>id</th>
+						<th>シフトin</th>
+						<th>シフトout</th>
+						<th>勤務時間</th>
+						<th>休憩時間</th>
+						<th>深夜時間</th>
+						<th>総労働時間</th>
+	        </tr>
+	      </thead>
+
+				<% @staff.works.each do |workday| %>
+
+					<tbody>
+						<tr>
+							<th><%= link_to 'edit',edit_staff_work_path(@staff,workday.id), class: 'btn btn-outline-info btn-sm' %></th>
+							<td><%= workday.id %></td>
+							<td><%= workday.in.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
+
+						<% if workday.out.present?  %>
+
+							<td><%= workday.out.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
+							<td>
+								<% sec = (workday.out.in_time_zone - workday.in.in_time_zone) %>
+								<%= h_mm(sec) %>
+							</td>
+
+						<% else %>
+
+							<td>未退勤です</td>
+
+						<% end %>
+
+						<% if @break_out.present? %>
+							<td>
+								<% time = 0 %>
+
+								<% workday.breaks.each do |break_time| %>
+									<% off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone) %>
+									<% time += off_time %>
+								<% end %>
+
+								<%= h_mm(time) %>
+							</td>
+							<td>深夜</td>
+							<td><%= h_mm(sec - time) %></td>
+
+						<% else %>
+
+							<td>無し</td>
+							<td>深夜</td>
+							<td><%= h_mm(sec) %></td>
+
+						<% end %>
+
+
+
+						</tr>
+					</tbody>
+
+				<% end %>
+
+			</table>
+  	</div>
+  </div>
+</div>
