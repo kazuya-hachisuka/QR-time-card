@@ -15,7 +15,7 @@ class WorksController < ApplicationController
 		require "date"
 		@work = Work.find(params[:id])
 		@work.update(params_work)
-		redirect_to staff_works_path
+		redirect_to staff_path
 	end
 
 	def create
@@ -70,13 +70,13 @@ class WorksController < ApplicationController
 	def destroy
 		work = Work.find(params[:id])
 		work.destroy
-		redirect_to staff_works_path
+		redirect_to staff_path
 	end
 
 	def break_destroy
 	 	@breaks = Break.find_by(params[:work_id])
 	 	@breaks.destroy
-	 	redirect_to staff_works_path
+	 	redirect_to staff_path
 	end
 
 	private
