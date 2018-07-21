@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   	registrations: 'admins/registrations'
   }
 
-  root'cameras#index'
+  root'cameras#show'
 
   resources :stores,only:[:index,:show,:new,:create,:update,:destroy]
 
