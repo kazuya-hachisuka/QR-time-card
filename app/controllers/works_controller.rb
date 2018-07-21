@@ -27,7 +27,7 @@ class WorksController < ApplicationController
 		@staff.save
 		@work.staff_id = @staff.id
 		@work.save
-		redirect_to cameras_index_path
+		redirect_to root_path
 	end
 
 	def shift_out
@@ -37,7 +37,7 @@ class WorksController < ApplicationController
 		@staff.save
 		work = Work.find(params[:work_id])
 		work.update(out: DateTime.now)
-		redirect_to cameras_index_path
+		redirect_to root_path
 	end
 
 	def break_create
@@ -48,7 +48,7 @@ class WorksController < ApplicationController
 		@work = Work.find(params[:work_id])
 		@break = @work.breaks.build(break_in: DateTime.now )
 		@break.save
-		redirect_to cameras_index_path
+		redirect_to root_path
 	end
 
 	def break_update
@@ -58,7 +58,7 @@ class WorksController < ApplicationController
 		@staff.save
 		@break = Break.last
 		@break.update(break_out: DateTime.now)
-		redirect_to cameras_index_path
+		redirect_to root_path
 	end
 
 	def edit
