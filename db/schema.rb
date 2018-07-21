@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20180720103014) do
     t.string "given_name", null: false
     t.string "family_name_kana", null: false
     t.string "given_name_kana", null: false
-    t.string "qrcode", null: false
+    t.string "qrcode"
     t.integer "status", default: 0, null: false
     t.integer "store_id", null: false
     t.integer "work_id"
