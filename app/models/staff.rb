@@ -1,5 +1,6 @@
 class Staff < ApplicationRecord
 	belongs_to :store
+	has_many :works
 
 	def worked
 		require "date"
