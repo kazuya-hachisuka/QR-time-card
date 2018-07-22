@@ -93,4 +93,8 @@ class WorksController < ApplicationController
 	def params_break
 		params.require(:break).permit(:break_in,:break_out,:work_id)
 	end
+
+	def params_store
+		params.require(:store).permit(:store_name)
+	end
 end
