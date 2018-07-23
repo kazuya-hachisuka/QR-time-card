@@ -12,6 +12,10 @@ Rails.application.routes.draw do
 
     resources :works,only:[:create,:new,:update,:index,:edit,:destroy]
 
+    get 'works/add_work' => 'works#add_work', as:'work_add'
+
+    post 'works/add_work_create' => 'works#add_work_create', as:'work_add_create'
+
     post 'works/:work_id/breaks' => 'works#break_create', as:'work_break_in'
 
     patch 'works/:work_id/breaks' => 'works#break_update', as:'work_break_out'

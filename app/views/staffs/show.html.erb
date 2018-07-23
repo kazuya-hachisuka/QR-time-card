@@ -1,7 +1,7 @@
 <div class="container-fluid py-4">
 	<div class="row">
-			<div  class="d-inline-block">
-				<div class="card shadow-lg border-dark ml-3" style="width:18rem;">
+			<div class="d-inline-block">
+				<div class="card shadow-lg border-dark ml-2" style="width:18rem;">
 					<h3 class="card-header text-center font-weight-bold" style="background-color:#fb8303;">
 						<%= @staff.family_name %>
 						<%= @staff.given_name %>
@@ -14,7 +14,7 @@
 						<b><%= @staff.store.store_name %></b>
 					</div>
 				</div>
-			<button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#ModalCenter">編集</button>
+			<button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#ModalCenter">スタッフ情報編集</button>
 
 	    	<!-- モーダルの設定 -->
 		    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
@@ -43,7 +43,7 @@
 			</div>
 
 			<div class="d-inline-block">
-				<div class="card shadow-lg border-dark ml-3" style="width:50rem;">
+				<div class="card shadow-lg border-dark ml-3" style="width:100%; ">
 			    <div class="card-header lead" style="background-color:#fb8303;">
 				    <span class="font-weight-bold"><%= @staff.store.store_name %></span>
 				    <span class="font-weight-bold">?月</span>
@@ -53,13 +53,14 @@
 					    	<%= @staff.family_name %>
 						    <%= @staff.given_name %>
 						  </span>
+						  <%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
 			  		</div>
 
-			    <table class="table table-hover table-sm">
+			    <table class="table table-hover">
 			      <thead class="bg-light">
 			        <tr>
 			          <th>編集</th>
-								<th>id</th>
+								<!-- <th>id</th> -->
 								<th>シフトin</th>
 								<th>シフトout</th>
 								<th>勤務時間</th>
@@ -69,12 +70,12 @@
 			        </tr>
 			      </thead>
 
-						<% @staff.works.each do |workday| %>
+						<% @staff.works.order(:in).each do |workday| %>
 
 							<tbody>
 								<tr>
 									<th><%= link_to 'edit',edit_staff_work_path(@staff,workday.id), class: 'btn btn-outline-info btn-sm' %></th>
-									<td><%= workday.id %></td>
+									<!-- <td><%#= workday.id %></td> -->
 									<td><%= workday.in.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
 
 								<% if workday.out.present?  %>
@@ -92,29 +93,45 @@
 
 								<% end %>
 
-								<% if @break_out.present? %>
-									<td>
-										<% time = 0 %>
+								<% time = 0 %>
 
-										<% workday.breaks.each do |break_time| %>
-											<% off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone) %>
-											<% time += off_time %>
-										<% end %>
+								<% workday.breaks.each do |break_time| %>
 
-										<%= h_mm(time) %>
-									</td>
-									<td>深夜</td>
-									<td><%= h_mm(sec - time) %></td>
 
-								<% else %>
+									<% unless break_time.break_out.blank? %>
 
-									<td>無し</td>
-									<td>深夜</td>
-									<td><%= h_mm(sec) %></td>
+										<% off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone) %>
+
+										<% time += off_time %>
+
+									<% end %>
 
 								<% end %>
 
+									<td>
+										<% if time == 0 %>
 
+											無し
+
+										<% else %>
+
+											<%= h_mm(time) %>
+
+										<% end %>
+
+									</td>
+
+									<td>深夜</td>
+									<td>
+										<% if sec == nil %>
+
+											0
+										<% else %>
+
+											<%= h_mm(sec - time) %>
+
+										<% end %>
+									</td>
 
 								</tr>
 							</tbody>
@@ -124,10 +141,5 @@
 					</table>
 		  	</div>
 			</div>
-	</div>
-	<div  class="container">
-		<div class="row">
-
-		</div>
 	</div>
 </div>

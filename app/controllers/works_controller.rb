@@ -15,7 +15,7 @@ class WorksController < ApplicationController
 		require "date"
 		@work = Work.find(params[:id])
 		@work.update(params_work)
-		redirect_to staff_path
+		redirect_to staff_path(params[:staff_id])
 	end
 
 	def create
@@ -70,13 +70,28 @@ class WorksController < ApplicationController
 	def destroy
 		work = Work.find(params[:id])
 		work.destroy
-		redirect_to staff_path
+		redirect_to staff_path(params[:staff_id])
 	end
 
 	def break_destroy
 	 	@breaks = Break.find_by(params[:work_id])
 	 	@breaks.destroy
-	 	redirect_to staff_path
+	 	redirect_to staff_path(params[:staff_id])
+	end
+
+	def add_work
+		@staff = Staff.find(params[:staff_id])
+		@work = Work.new
+		@break = Break.new
+	end
+
+	def add_work_create
+		@staff = Staff.find(params[:staff_id])
+		@work = Work.new(params_work)
+		@work.staff_id = @staff.id
+		@work.save
+		# binding.pry
+		redirect_to staff_path(params[:staff_id])
 	end
 
 	private
@@ -91,6 +106,10 @@ class WorksController < ApplicationController
 	end
 
 	def params_break
-		params.require(:break).permit(:break_in,:break_out,:work_id)
+		params.require(:break).permit(:id,:break_in,:break_out,:work_id)
+	end
+
+	def params_store
+		params.require(:store).permit(:store_name)
 	end
 end
