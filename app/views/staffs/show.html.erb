@@ -14,7 +14,7 @@
 						<b><%= @staff.store.store_name %></b>
 					</div>
 				</div>
-			<button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#ModalCenter">編集</button>
+			<button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#ModalCenter">スタッフ情報編集</button>
 
 	    	<!-- モーダルの設定 -->
 		    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
@@ -53,6 +53,7 @@
 					    	<%= @staff.family_name %>
 						    <%= @staff.given_name %>
 						  </span>
+						  <%= link_to "add", staff_work_add_path(params[:id]) %>
 			  		</div>
 
 			    <table class="table table-hover">

@@ -79,6 +79,19 @@ class WorksController < ApplicationController
 	 	redirect_to staff_path(params[:staff_id])
 	end
 
+	def add_work
+		@staff = Staff.find(params[:staff_id])
+		@work = Work.new
+	end
+
+	def add_work_create
+		@staff = Staff.find(params[:staff_id])
+		@work = Work.new(params_work)
+		@work.save
+		binding pry
+		redirect_to staff_path(params[:staff_id])
+	end
+
 	private
 
 	def params_staff
