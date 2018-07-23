@@ -1,7 +1,7 @@
 <div class="container-fluid py-4">
 	<div class="row">
 			<div class="d-inline-block">
-				<div class="card shadow-lg border-dark ml-3" style="width:18rem;">
+				<div class="card shadow-lg border-dark ml-2" style="width:18rem;">
 					<h3 class="card-header text-center font-weight-bold" style="background-color:#fb8303;">
 						<%= @staff.family_name %>
 						<%= @staff.given_name %>
@@ -43,7 +43,7 @@
 			</div>
 
 			<div class="d-inline-block">
-				<div class="card shadow-lg border-dark ml-3" style="width:50rem;">
+				<div class="card shadow-lg border-dark ml-3" style="width:100%; ">
 			    <div class="card-header lead" style="background-color:#fb8303;">
 				    <span class="font-weight-bold"><%= @staff.store.store_name %></span>
 				    <span class="font-weight-bold">?月</span>
@@ -55,7 +55,7 @@
 						  </span>
 			  		</div>
 
-			    <table class="table table-hover table-sm">
+			    <table class="table table-hover">
 			      <thead class="bg-light">
 			        <tr>
 			          <th>編集</th>
@@ -124,10 +124,5 @@
 					</table>
 		  	</div>
 			</div>
-	</div>
-	<div  class="container">
-		<div class="row">
-
-		</div>
 	</div>
 </div>

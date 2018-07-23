@@ -59,7 +59,7 @@ class StaffsController < ApplicationController
 
   private
   def staff_params
-  	params.require(:staff).permit(:id,:qrcode,:family_name,:family_name_kana,:given_name,:given_name_kana,:store_id)
+  	params.require(:staff).permit(:id,:qrcode,:family_name,:family_name_kana,:given_name,:given_name_kana,:store_id,:work_id)
   end
 
   def store_params
