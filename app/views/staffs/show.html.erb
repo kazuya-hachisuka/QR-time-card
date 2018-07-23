@@ -60,8 +60,8 @@
 			      <thead class="bg-light">
 			        <tr>
 			          <th>編集</th>
-<!-- 								<th>id</th>
- -->								<th>シフトin</th>
+								<!-- <th>id</th> -->
+								<th>シフトin</th>
 								<th>シフトout</th>
 								<th>勤務時間</th>
 								<th>休憩時間</th>
@@ -111,18 +111,27 @@
 									<td>
 										<% if time == 0 %>
 
-										無し
+											無し
 
 										<% else %>
 
-										<%= h_mm(time) %>
+											<%= h_mm(time) %>
 
 										<% end %>
 
 									</td>
 
 									<td>深夜</td>
-									<td><%= h_mm(sec - time) %></td>
+									<td>
+										<% if sec == nil %>
+
+											0
+										<% else %>
+
+											<%= h_mm(sec - time) %>
+
+										<% end %>
+									</td>
 
 								</tr>
 							</tbody>
