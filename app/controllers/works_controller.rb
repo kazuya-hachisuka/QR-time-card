@@ -87,8 +87,9 @@ class WorksController < ApplicationController
 	def add_work_create
 		@staff = Staff.find(params[:staff_id])
 		@work = Work.new(params_work)
+		@work.staff_id = @staff.id
 		@work.save
-		binding pry
+		binding.pry
 		redirect_to staff_path(params[:staff_id])
 	end
 

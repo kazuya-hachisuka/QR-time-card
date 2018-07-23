@@ -53,15 +53,15 @@
 					    	<%= @staff.family_name %>
 						    <%= @staff.given_name %>
 						  </span>
-						  <%= link_to "add", staff_work_add_path(params[:id]) %>
+						  <%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
 			  		</div>
 
 			    <table class="table table-hover">
 			      <thead class="bg-light">
 			        <tr>
 			          <th>編集</th>
-								<th>id</th>
-								<th>シフトin</th>
+<!-- 								<th>id</th>
+ -->								<th>シフトin</th>
 								<th>シフトout</th>
 								<th>勤務時間</th>
 								<th>休憩時間</th>
@@ -70,12 +70,12 @@
 			        </tr>
 			      </thead>
 
-						<% @staff.works.each do |workday| %>
+						<% @staff.works.order(:in).each do |workday| %>
 
 							<tbody>
 								<tr>
 									<th><%= link_to 'edit',edit_staff_work_path(@staff,workday.id), class: 'btn btn-outline-info btn-sm' %></th>
-									<td><%= workday.id %></td>
+									<!-- <td><%#= workday.id %></td> -->
 									<td><%= workday.in.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
 
 								<% if workday.out.present?  %>
