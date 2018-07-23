@@ -93,29 +93,36 @@
 
 								<% end %>
 
-								<% if @break_out.present? %>
-									<td>
-										<% time = 0 %>
+								<% time = 0 %>
 
-										<% workday.breaks.each do |break_time| %>
-											<% off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone) %>
-											<% time += off_time %>
-										<% end %>
+								<% workday.breaks.each do |break_time| %>
 
-										<%= h_mm(time) %>
-									</td>
-									<td>深夜</td>
-									<td><%= h_mm(sec - time) %></td>
 
-								<% else %>
+									<% unless break_time.break_out.blank? %>
 
-									<td>無し</td>
-									<td>深夜</td>
-									<td><%= h_mm(sec) %></td>
+										<% off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone) %>
+
+										<% time += off_time %>
+
+									<% end %>
 
 								<% end %>
 
+									<td>
+										<% if time == 0 %>
 
+										無し
+
+										<% else %>
+
+										<%= h_mm(time) %>
+
+										<% end %>
+
+									</td>
+
+									<td>深夜</td>
+									<td><%= h_mm(sec - time) %></td>
 
 								</tr>
 							</tbody>

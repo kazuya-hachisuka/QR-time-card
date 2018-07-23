@@ -27,8 +27,8 @@ class StaffsController < ApplicationController
   	require 'chunky_png/rmagick' # Magick::Image、ChunkyPNG::Image 間の変換に使用
 
     text = "http://localhost:3000/staffs/#{@staff.id.to_s}/works/new"
-    width = 150
-    height = 150
+    width = 200
+    height = 200
 
     qr = RQRCode::QRCode.new(text, :size => 10, :level => :h)
     # ChunkyPNG::Image を Magick::Image に変換
@@ -60,6 +60,10 @@ class StaffsController < ApplicationController
   private
   def staff_params
   	params.require(:staff).permit(:id,:qrcode,:family_name,:family_name_kana,:given_name,:given_name_kana,:store_id,:work_id)
+  end
+
+  def params_break
+    params.require(:break).permit(:id,:break_in,:break_out,:work_id)
   end
 
   def store_params
