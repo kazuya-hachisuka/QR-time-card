@@ -6,6 +6,7 @@
 						<%= @staff.family_name %>
 						<%= @staff.given_name %>
 					</h3>
+
 					<div class="card-body text-center">
 						<%=  image_tag @qrpng ,class:"img-thumbnail mx-auto border-dark my-5", :size =>'250x250' %>
 					</div>
@@ -43,16 +44,29 @@
 			</div>
 
 			<div class="d-inline-block">
-				<div class="card shadow-lg border-dark ml-3" style="width:100%; ">
+				<div class="card shadow-lg border-dark ml-3" style="width:100%;">
 			    <div class="card-header lead" style="background-color:#fb8303;">
 				    <span class="font-weight-bold"><%= @staff.store.store_name %></span>
-				    <span class="font-weight-bold">?月</span>
+				    <div class="form-inline float-right">
+						  	<%= search_form_for @search, url:staff_path do |f| %>
+  								<%= f.date_select :in_gteq, {include_blank: true, use_month_numbers: true, date_separator: ' / ',default: Date.today}, class: "form-control" %> 〜
+    							<%= f.date_select :in_lteq, {include_blank: true, use_month_numbers: true, date_separator: ' / '}, class: "form-control" %>
+  								<%= f.submit "検索",class:"btn btn-outline-dark btn-sm" %>
+  								<%= link_to '検索条件クリア', request.path,class:"btn btn-outline-secondary btn-sm" %>
+								<% end %>
+							</div>
 				  </div>
+
 				    <div class="card-body bg-light">
 					    <span class="card-title font-weight-bold">
 					    	<%= @staff.family_name %>
 						    <%= @staff.given_name %>
+						    <span>労働時間  <%= h_mm(totalwork(@works))%></span>
+						    <span>休憩  <%= h_mm(@breaks) %></span>
+
 						  </span>
+
+
 						  <%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
 			  		</div>
 
@@ -70,7 +84,7 @@
 			        </tr>
 			      </thead>
 
-						<% @staff.works.order(:in).each do |workday| %>
+						<% @works.order(:in).each do |workday| %>
 
 							<tbody>
 								<tr>
@@ -137,7 +151,6 @@
 							</tbody>
 
 						<% end %>
-
 					</table>
 		  	</div>
 			</div>
