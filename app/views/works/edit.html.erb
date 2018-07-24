@@ -1,50 +1,64 @@
-<div class="container-fluid py-5">
+<div class="container py-2">
+	<div class="row">
+		<span class="border-bottom font-weight-bold h2" ><%= @staff.store.store_name %></span>
+	</div>
+</div>
+<div class="container-fluid">
 	<div class="row justify-content-center">
-		<div class="card border-secondary shadow-lg" style="width:90%;">
-			<span class="card-header font-weight-bold h4" ><%= @staff.store.store_name %></span>
+		<div class="card border-secondary shadow-lg mb-5" style="width:90%;">
+			<span class="card-header font-weight-bold h4" style="background-color:#fb8303;">
+				<%= @staff.family_name %><%= @staff.given_name %>
+			</span>
 
 				<div class="card-body">
 
-					<%= form_for ([@staff, @work]) do |f| %>
-
-						<span class="card-title text-center font-weight-bold">
-							<%= @staff.family_name %>
-							<%= @staff.given_name %>
-
-							<%= f.submit '更新', class:"btn btn-outline-info btn-sm", method: :patch %>
-						</span>
-
+				<%= form_for ([@staff, @work]) do |f| %>
 						<div class="container py-4">
 							<div class="row justify-content-center">
-								<div class="card-deck m-2">
-											<div class="card border-secondary shadow-lg">
-												<span class="card-header text-white text-center font-weight-bold" style="background-color:#F08300;">出勤</span>
-													<div class="card-body bg-light">
-														<p class="card-text">出勤 <%= f.datetime_select :in, :use_month_numbers => true , class: "form-control" %></p>
-														<p class="card-text">退勤 <%= f.datetime_select :out, :use_month_numbers => true,:include_blank => true, class: "form-control" %></p>
-														<%= link_to "削除", staff_work_path(params[:staff_id],[@work]),method: :delete ,data: {confirm: '本当に削除しますか??'}, class:"btn btn-outline-danger badge-pill btn-sm" %>
-													</div>
-											</div>
-								</div>
-
-								<%= f.fields_for :breaks do |t| %>
-									<div class="card-deck m-2">
-										<div class="card border-secondary shadow-lg">
-											<span class="card-header text-white text-center font-weight-bold" style="background-color:#009944;">休憩</span>
-												<div class="card-body bg-light" >
-														<p class="card-text">休憩 <%= t.datetime_select :break_in, :use_month_numbers => true , class: "form-control" %></p>
-														<p class="card-text">戻り <%= t.datetime_select :break_out, :use_month_numbers => true,:include_blank => true, class: "form-control" %></p>
-														<%= link_to "削除", staff_work_breaks_path(params[:staff_id],[@work],[@breaks]),method: :delete ,data: {confirm: '本当に削除しますか??'}, class:"btn btn-outline-danger badge-pill btn-sm" %>
-												</div>
-										</div>
-									</div>
-								<% end %>
-
-					<% end %>
-
+								<table class="table">
+									<thead class="thead-light">
+										<tr>
+											<th style="color:#fb8303;">出勤</th>
+											<th></th>
+											<th style="color:#fb8303;">退勤</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><%= f.datetime_select :in, :use_month_numbers => true , class: "form-control" %></td>
+											<td></td>
+											<td><%= f.datetime_select :out, :use_month_numbers => true,:include_blank => true, class: "form-control" %></td>
+											<td><%= link_to "削除", staff_work_path(params[:staff_id],[@work]),method: :delete ,data: {confirm: '本当に削除しますか??'}, class:"btn btn-outline-danger badge-pill btn-sm float-right" %></td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
-				</div>
+
+						<%= f.fields_for :breaks do |t| %>
+						<div class="container py-4">
+							<div class="row justify-content-center">
+								<table class="table">
+									<thead class="thead-light">
+										<th>休憩</th>
+										<th></th>
+										<th>戻り</th>
+										<th></th>
+									</thead>
+									<tbody>
+										<td><%= t.datetime_select :break_in, :use_month_numbers => true , class: "form-control" %></td>
+										<td></td>
+										<td><%= t.datetime_select :break_out, :use_month_numbers => true,:include_blank => true, class: "form-control" %></td>
+										<td><%= link_to "削除", staff_work_breaks_path(params[:staff_id],[@work],[@breaks]),method: :delete ,data: {confirm: '本当に削除しますか??'}, class:"btn btn-outline-danger badge-pill btn-sm float-right" %></td>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<% end %>
+
+					<%= f.submit '更新', class:"btn btn-info btn-block mb-2", method: :patch %>
+				<% end %>
 
 		</div>
 	</div>
