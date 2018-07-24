@@ -48,6 +48,10 @@ class StaffsController < ApplicationController
     @qrpng = ChunkyPNG::RMagick.import(image).to_data_url
     @staff.qrcode = @qrpng
     @staff.save
+    #ransack
+    @search = Work.ransack(params[:q])
+    @works = @search.result
+
   end
 
   def destroy
@@ -56,10 +60,13 @@ class StaffsController < ApplicationController
     redirect_to stores_path
   end
 
-
   private
   def staff_params
   	params.require(:staff).permit(:id,:qrcode,:family_name,:family_name_kana,:given_name,:given_name_kana,:store_id,:work_id)
+  end
+
+  def params_work
+    params.require(:work).permit(:in,:out,:staff_id,:break_id)
   end
 
   def params_break
