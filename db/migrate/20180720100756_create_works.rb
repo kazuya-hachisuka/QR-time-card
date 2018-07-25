@@ -1,7 +1,7 @@
 class CreateWorks < ActiveRecord::Migration[5.1]
   def change
     create_table :works do |t|
-      t.datetime :in
+      t.datetime :in, null: false
       t.datetime :out
       t.integer :staff_id, null: false, index: true
 
