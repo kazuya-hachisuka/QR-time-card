@@ -1,0 +1,45 @@
+<div class="container py-4">
+	<div class="row justify-content-center">
+	<%= form_for work, url: staff_work_add_create_path([staff],[work]), method: :post do |f| %>
+
+		<span class="card-title text-center font-weight-bold">
+			<%= staff.family_name %><%= staff.given_name %>
+		</span>
+		<div class="card border-secondary shadow-lg">
+			<span class="card-header text-white text-center font-weight-bold" style="background-color:#F08300;">出勤</span>
+				<div class="card-body bg-light">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>出勤</th>
+								<th>退勤</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<%= f.datetime_select :in, :use_month_numbers => true, :start_year => 2018, :date_separator => '/',:include_blank => true, class: "form-control" %>
+								</td>
+								<td>
+									<%= f.datetime_select :out, :use_month_numbers => true, :start_year => 2018, :date_separator => '/',:include_blank => true, class: "form-control" %>
+								</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+					<div id="break">
+						<%= f.fields_for :breaks do |break_time| %>
+						<%= render 'works/break_fields', f: break_time %>
+						<% end %>
+						<div id="links" >
+							<%= link_to_add_association '+休憩',f, :breaks %>
+						</div>
+							<%= link_to_remove_association "remove", f %>
+					</div>
+					<%= f.submit '勤怠追加', class:"btn btn-outline-info btn-sm" %>
+				</div>
+		</div>
+	<% end %>
+	</div>
+</div>

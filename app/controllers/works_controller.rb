@@ -82,7 +82,7 @@ class WorksController < ApplicationController
 	def add_work
 		@staff = Staff.find(params[:staff_id])
 		@work = Work.new
-		@break = Break.new
+		@break = @work.breaks.build
 	end
 
 	def add_work_create
@@ -102,7 +102,7 @@ class WorksController < ApplicationController
 
 	def params_work
 		params.require(:work).permit(:in,:out,:staff_id,:break_id,
-			breaks_attributes:[:break_in,:break_out,:work_id,:id])
+			breaks_attributes:[:break_in,:break_out,:work_id,:id,:_destroy])
 	end
 
 	def params_break
