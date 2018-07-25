@@ -49,8 +49,8 @@
 				    <span class="font-weight-bold"><%= @staff.store.store_name %></span>
 				    <div class="form-inline float-right">
 						  	<%= search_form_for @search, url:staff_path do |f| %>
-  								<%= f.date_select :in_gteq, {include_blank: true, use_month_numbers: true, date_separator: ' / ',default: Date.today}, class: "form-control" %> 〜
-    							<%= f.date_select :in_lteq, {include_blank: true, use_month_numbers: true, date_separator: ' / '}, class: "form-control" %>
+  								<%= f.date_select :in_gteq, {include_blank: true, use_month_numbers: true, date_separator: ' / ', start_year: 2018}, class: "form-control" %> 〜
+    							<%= f.date_select :in_lteq, {use_month_numbers: true, date_separator: ' / ', default: Date.today,start_year: 2018}, class: "form-control" %>
   								<%= f.submit "検索",class:"btn btn-outline-dark btn-sm" %>
   								<%= link_to '検索条件クリア', request.path,class:"btn btn-outline-secondary btn-sm" %>
 								<% end %>
