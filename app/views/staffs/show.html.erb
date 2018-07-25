@@ -49,7 +49,7 @@
 				    <span class="font-weight-bold"><%= @staff.store.store_name %></span>
 				    <div class="form-inline float-right">
 						  	<%= search_form_for @search, url:staff_path do |f| %>
-  								<%= f.date_select :in_gteq, {include_blank: true, use_month_numbers: true, date_separator: ' / ', start_year: 2018}, class: "form-control" %> 〜
+  								<%= f.date_select :in_gteq, {include_blank: true, use_month_numbers: true, date_separator: ' / ', start_year: 2018,}, class: "form-control" %> 〜
     							<%= f.date_select :in_lteq, {use_month_numbers: true, date_separator: ' / ', default: Date.today,start_year: 2018}, class: "form-control" %>
   								<%= f.submit "検索",class:"btn btn-outline-dark btn-sm" %>
   								<%= link_to '検索条件クリア', request.path,class:"btn btn-outline-secondary btn-sm" %>
@@ -61,13 +61,11 @@
 					    <span class="card-title font-weight-bold">
 					    	<%= @staff.family_name %>
 						    <%= @staff.given_name %>
-						    <span>労働時間  <%= h_mm(totalwork(@works))%></span>
-						    <span>休憩  <%= h_mm(@breaks) %></span>
-
-						  </span>
-
-
-						  <%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
+						    <%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
+						   </span>
+						    	<p class="card-text pt-2 border-bottom">合計労働時間  <%= h_mm(totalwork(@works))%></p>
+						    	<p class="card-text border-bottom"> 合計休憩時間 <%= h_mm(@breaks) %></p>
+						    	<p class="card-text border-bottom"> 総労働時間 <%= h_mm(totalwork(@works) - @breaks) %></p>
 			  		</div>
 
 			    <table class="table table-hover">
