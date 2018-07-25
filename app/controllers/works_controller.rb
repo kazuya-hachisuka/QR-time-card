@@ -92,6 +92,7 @@ class WorksController < ApplicationController
 		if @work.save
 			redirect_to staff_path(params[:staff_id])
 		else
+			flash[:add_work_faled] = "入力項目を確認して下さい。"
 			render :add_work
 		end
 	end

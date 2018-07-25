@@ -6,7 +6,7 @@
 			<%= staff.family_name %><%= staff.given_name %>
 		</span>
 		<div class="card border-secondary shadow-lg">
-			<span class="card-header text-white text-center font-weight-bold" style="background-color:#F08300;">出勤</span>
+			<span class="card-header text-white text-center font-weight-bold" style="background-color:#F08300;">勤怠追加</span>
 				<div class="card-body bg-light">
 					<table class="table">
 						<thead>
@@ -19,10 +19,14 @@
 						<tbody>
 							<tr>
 								<td>
-									<%= f.datetime_select :in, :use_month_numbers => true, :start_year => 2018, :date_separator => '/',:include_blank => true, class: "form-control" %>
+									<span class="form-inline">
+										<%= f.datetime_select :in, {:use_month_numbers => true, :start_year => 2018, :date_separator => '/',:include_blank => true}, class: "form-control" %>
+									</span>
 								</td>
 								<td>
-									<%= f.datetime_select :out, :use_month_numbers => true, :start_year => 2018, :date_separator => '/',:include_blank => true, class: "form-control" %>
+									<span class="form-inline">
+									<%= f.datetime_select :out, {:use_month_numbers => true, :start_year => 2018, :date_separator => '/',:include_blank => true}, class: "form-control" %>
+									</span>
 								</td>
 								<td></td>
 							</tr>
@@ -33,11 +37,11 @@
 						<%= render 'works/break_fields', f: break_time %>
 						<% end %>
 						<div id="links" >
-							<%= link_to_add_association '+休憩',f, :breaks %>
+							<%= link_to_add_association '+休憩',f, :breaks,class:"btn btn-outline-warning btn-sm" %>
 						</div>
-							<%= link_to_remove_association "remove", f %>
+							<%#= link_to_remove_association "remove", f %>
 					</div>
-					<%= f.submit '勤怠追加', class:"btn btn-outline-info btn-sm" %>
+					<%= f.submit '勤怠追加', class:"btn btn-outline-info btn-sm float-right" %>
 				</div>
 		</div>
 	<% end %>

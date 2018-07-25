@@ -57,22 +57,21 @@
 							</div>
 				  </div>
 
-				    <div class="card-body bg-light">
-					    <span class="card-title font-weight-bold">
-					    	<%= @staff.family_name %>
-						    <%= @staff.given_name %>
-						    <%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
-						   </span>
-						    	<p class="card-text pt-2 border-bottom">合計労働時間  <%= h_mm(totalwork(@works))%></p>
-						    	<p class="card-text border-bottom"> 合計休憩時間 <%= h_mm(@breaks) %></p>
-						    	<p class="card-text border-bottom"> 総労働時間 <%= h_mm(totalwork(@works) - @breaks) %></p>
-			  		</div>
+			    <div class="card-body bg-light">
+				    <span class="card-title font-weight-bold">
+				    	<%= @staff.family_name %>
+					    <%= @staff.given_name %>
+					    <%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
+					   </span>
+					    	<p class="card-text pt-2 border-bottom">合計労働時間  <%= h_mm(totalwork(@works))%></p>
+					    	<p class="card-text border-bottom"> 合計休憩時間 <%= h_mm(@breaks) %></p>
+					    	<p class="card-text border-bottom"> 総労働時間 <%= h_mm(totalwork(@works) - @breaks) %></p>
+		  		</div>
 
 			    <table class="table table-hover">
 			      <thead class="bg-light">
 			        <tr>
 			          <th>編集</th>
-								<!-- <th>id</th> -->
 								<th>シフトin</th>
 								<th>シフトout</th>
 								<th>勤務時間</th>
@@ -84,69 +83,68 @@
 
 						<% @works.order(:in).each do |workday| %>
 
-							<tbody>
-								<tr>
-									<th><%= link_to 'edit',edit_staff_work_path(@staff,workday.id), class: 'btn btn-outline-info btn-sm' %></th>
-									<!-- <td><%#= workday.id %></td> -->
-									<td><%= workday.in.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
+						<tbody>
+							<tr>
+								<th><%= link_to 'edit',edit_staff_work_path(@staff,workday.id), class: 'btn btn-outline-info btn-sm' %></th>
+								<td><%= workday.in.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
 
-								<% if workday.out.present?  %>
+							<% if workday.out.present?  %>
 
-									<td><%= workday.out.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
-									<td>
-										<% sec = (workday.out.in_time_zone - workday.in.in_time_zone) %>
-										<%= h_mm(sec) %>
-									</td>
+								<td><%= workday.out.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
+								<td>
+									<% sec = (workday.out.in_time_zone - workday.in.in_time_zone) %>
+									<%= h_mm(sec) %>
+								</td>
 
-								<% else %>
+							<% else %>
 
-									<td>出勤中</td>
-									<td>未確定</td>
+								<td>出勤中</td>
+								<td>未確定</td>
+
+							<% end %>
+
+							<% time = 0 %>
+
+							<% workday.breaks.each do |break_time| %>
+
+
+								<% unless break_time.break_out.blank? %>
+
+									<% off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone) %>
+
+									<% time += off_time %>
 
 								<% end %>
 
-								<% time = 0 %>
+							<% end %>
 
-								<% workday.breaks.each do |break_time| %>
+								<td>
+									<% if time == 0 %>
 
+										無し
 
-									<% unless break_time.break_out.blank? %>
+									<% else %>
 
-										<% off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone) %>
-
-										<% time += off_time %>
+										<%= h_mm(time) %>
 
 									<% end %>
 
-								<% end %>
+								</td>
 
-									<td>
-										<% if time == 0 %>
+								<td>深夜</td>
+								<td>
+									<% if sec == nil %>
 
-											無し
+										0
+									<% else %>
 
-										<% else %>
+										<%= h_mm(sec - time) %>
 
-											<%= h_mm(time) %>
+									<% end %>
+								</td>
 
-										<% end %>
-
-									</td>
-
-									<td>深夜</td>
-									<td>
-										<% if sec == nil %>
-
-											0
-										<% else %>
-
-											<%= h_mm(sec - time) %>
-
-										<% end %>
-									</td>
-
-								</tr>
-							</tbody>
+							</tr>
+						</tbody>
 
 						<% end %>
 					</table>
