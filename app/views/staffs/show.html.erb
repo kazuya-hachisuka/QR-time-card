@@ -48,13 +48,13 @@
 			    <div class="card-header lead" style="background-color:#fb8303;">
 				    <span class="font-weight-bold"><%= @staff.store.store_name %></span>
 				    <div class="form-inline float-right">
-						  	<%= search_form_for @search, url:staff_path do |f| %>
-  								<%= f.date_select :in_gteq, {include_blank: true, use_month_numbers: true, date_separator: ' / ', start_year: 2018,}, class: "form-control" %> 〜
-    							<%= f.date_select :in_lteq, {use_month_numbers: true, date_separator: ' / ', default: Date.today,start_year: 2018}, class: "form-control" %>
-  								<%= f.submit "検索",class:"btn btn-outline-dark btn-sm" %>
-  								<%= link_to '検索条件クリア', request.path,class:"btn btn-outline-secondary btn-sm" %>
-								<% end %>
-							</div>
+					  	<%= search_form_for @search, url:staff_path do |f| %>
+								<%= f.date_select :in_gteq, {include_blank: true, use_month_numbers: true, date_separator: ' / ', start_year: 2018,}, class: "form-control" %> 〜
+  							<%= f.date_select :in_lteq, {use_month_numbers: true, date_separator: ' / ', default: Date.today,start_year: 2018}, class: "form-control" %>
+								<%= f.submit "検索",class:"btn btn-outline-dark btn-sm" %>
+								<%= link_to '検索条件クリア', request.path,class:"btn btn-outline-secondary btn-sm" %>
+							<% end %>
+						</div>
 				  </div>
 
 			    <div class="card-body bg-light">
@@ -85,7 +85,7 @@
 
 						<tbody>
 							<tr>
-								<th><%= link_to 'edit',edit_staff_work_path(@staff,workday.id), class: 'btn btn-outline-info btn-sm' %></th>
+								<td><%= link_to 'edit',edit_staff_work_path(@staff,workday.id), class: 'btn btn-outline-info btn-sm' %></th>
 								<td><%= workday.in.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
 
 							<% if workday.out.present?  %>

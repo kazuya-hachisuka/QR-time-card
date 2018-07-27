@@ -27,6 +27,45 @@ class StoresController < ApplicationController
 		store = Store.find(params[:id])
 		store.destroy
 		redirect_to stores_path
+	end
+
+	def store_total_work
+		@store = Store.find(params[:store_id])
+		@breaks = 0
+		@outyet = 0
+		@store_total_times = 0
+		@store.staffs.each do |staff|
+	    staff.works.each do |workday|
+	    	unless workday.out.present?
+	    		@outyet += 1
+	    	end
+
+	      # workday.breaks.each do |break_time|
+       #    unless break_time.break_out.blank?
+       #      off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone)
+       #      @breaks += off_time
+       #    end
+	      # end
+	    end
+	  end
+	  #ransack
+	  @search = Work.ransack(params[:q])
+    @works = Work.ransack(params[:q]).result
+    @sum = 0
+    @offtime = 0
+    total = 0
+
+    @works.each do |work|
+		    if @store.staffs.pluck(:id).include?(work.staff_id) && work.out != nil
+		    	@sum += work.out.in_time_zone - work.in.in_time_zone
+		    work.breaks.each do |breaktime|
+		    	unless breaktime.break_out.blank?
+		    		@offtime += breaktime.break_out.in_time_zone - breaktime.break_in.in_time_zone
+		    	end
+		    end
+	    end
+	  end
+
 
 	end
 
@@ -38,4 +77,9 @@ class StoresController < ApplicationController
 	def staff_params
   	params.require(:staff).permit(:id,:qrcode,:family_name,:family_name_kana,:given_name,:given_name_kana,:store_id)
   end
+
+  def params_work
+    params.require(:work).permit(:id,:in,:out,:staff_id,:break_id)
+  end
+
 end

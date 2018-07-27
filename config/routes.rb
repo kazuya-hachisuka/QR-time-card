@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   resources :stores,only:[:index,:show,:new,:create,:update,:destroy]
 
+  get 'stores/:store_id/total_work' => 'stores#store_total_work', as: 'stores_total_work'
+
   resources :staffs, only:[:create,:new,:show,:update,:destroy] do
 
     resources :works,only:[:create,:new,:update,:index,:edit,:destroy]

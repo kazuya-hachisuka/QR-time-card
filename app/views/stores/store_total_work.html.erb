@@ -1,0 +1,53 @@
+<div class="container py-5">
+	<div class="row justify-content-center">
+		<div class="form-inline float-right">
+	  	<%= search_form_for @search, url:stores_total_work_path do |f| %>
+				<%= f.date_select :in_gteq, {include_blank: true, use_month_numbers: true, date_separator: ' / ', start_year: 2018,}, class: "form-control" %> 〜
+				<%= f.date_select :in_lteq, {use_month_numbers: true, date_separator: ' / ', default: Date.today,start_year: 2018}, class: "form-control" %>
+				<%= f.submit "検索",class:"btn btn-outline-dark btn-sm" %>
+				<%= link_to '検索条件クリア', request.path,class:"btn btn-outline-secondary btn-sm" %>
+			<% end %>
+		</div>
+		<div class="card">
+			<div class="card-header">
+				<%= @store.store_name %>
+				<% @store.staffs.each do |staff| %>
+				  <% h_mm(totalwork(staff.works)) %>
+				  <% h_mm(@breaks) %>
+					<% h_mm(totalwork(staff.works) - (@breaks)) %>
+					<% @store_total_times += totalwork(staff.works) - @breaks %>
+				<% end %>
+				<span><%= h_mm(@store_total_times) %></span>
+				<span class="float-right">出勤中 <%= @outyet %>名</span>
+			</div>
+			<div class="card-body">
+					<table class="table table">
+						<thead>
+							<tr>
+								<th>Staff</th>
+								<th>勤務時間</th>
+								<th>休憩時間</th>
+								<th>総労働時間</th>
+							</tr>
+
+						</thead>
+						<tbody>
+						  <% @store.staffs.each do |staff| %>
+								<tr>
+								  <td>
+								    <%= link_to "#{staff.family_name}#{staff.given_name}",staff_path(staff), class:"text-dark" %>
+								  </td>
+								  <td><%= h_mm(totalwork(staff.works)) %></td>
+								  <td><%= h_mm(total_break(staff)) %></td>
+								<td><%= h_mm(totalwork(staff.works) - total_break(staff)) %></td>
+							</tr>
+						</tbody>
+						<% end %>
+					</table>
+			</div>
+		</div>
+	</div>
+</div>
+<%= h_mm(@sum) %>勤怠合計
+<%= h_mm(@offtime) %>休憩合計
+<%= h_mm(@sum - @offtime) %>実働合計
