@@ -1,7 +1,7 @@
  <div class="container pt-4">
+  <div class="jumbotron">
   <div class="row justify-content-center">
-    <div class="card-grope">
-      <div class="card border-secondary shadow-lg m-2" >
+      <div class="card border-secondary shadow-lg m-2 w-100">
         <div class="card-header" style="background-color:#fb8303;">
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -13,7 +13,7 @@
           </ul>
         </div>
         <div class="card-body">
-          <table class="table table-bordered">
+          <table class="table table-striped">
             <thead>
               <tr>
                 <th>店舗名</th>
@@ -25,7 +25,7 @@
             <tbody>
               <tr>
             <% @store.each do |store|%>
-                <th><%= store.store_name%></td>
+                <th><%= store.store_name%></th>
               <% if store.staffs.present? %>
                 <td class="text-center"><%= store.staffs.count %>名</td>
 
@@ -45,7 +45,6 @@
         </div>
 
       </div>
-
-    </div>
+  </div>
   </div>
 </div>

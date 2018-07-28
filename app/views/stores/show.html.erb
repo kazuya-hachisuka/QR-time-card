@@ -1,8 +1,5 @@
-<div class="container pt-4">
-  <h1>店舗詳細</h1>
+<div class="container pt-5">
   <div class="row justify-content-center">
-    <div class="card-deck">
-
 
       <div class="card border-secondary shadow-lg w-75">
         <div class="card-header" style="background-color:#fb8303;">
@@ -21,7 +18,7 @@
               <%= link_to "店舗一覧", stores_path, class:"nav-link text-secondary" %>
             </li>
             <li class="nav-item">
-              <%= link_to "勤怠一覧", stores_path, class:"nav-link text-secondary" %>
+              <%= link_to "勤怠一覧", stores_total_work_path(@store), class:"nav-link text-secondary" %>
             </li>
           </ul>
         </div>
@@ -82,6 +79,5 @@
 
         </div>
       </div>
-    </div>
   </div>
 </div>

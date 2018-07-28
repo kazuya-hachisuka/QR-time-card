@@ -49,18 +49,17 @@ class StaffsController < ApplicationController
     @staff.qrcode = @qrpng
     @staff.save
     #ransack
-    @search = Work.ransack(params[:q])
+    @search = @staff.works.ransack(params[:q])
     @works = @search.result
     @breaks = 0
     @works.order(:in).each do |workday|
-      workday.breaks.each do |break_time| 
+      workday.breaks.each do |break_time|
           unless break_time.break_out.blank?
             off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone)
             @breaks += off_time
           end
       end
     end
-
   end
 
   def destroy
