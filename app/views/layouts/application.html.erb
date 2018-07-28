@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Kintaikun(仮)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -10,7 +11,7 @@
 
   <body>
 <header>
-	<nav class="navbar navbar-light" style="background-color: #ff8e00;">
+	<nav class="navbar navbar-expand-lg" style="background-color: #ff8e00;">
     <!-- 切り替えボタンの設定 -->
     <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
       Bootstrap
@@ -54,7 +55,7 @@
 
     </div>
   </div>
-  <ul class="nav">
+  <ul class="navbar-nav ml-auto">
     <li class="nav-item dropdown">
         <a href="#" class="nav-link dropdown-toggle text-secondary" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">店舗メニュー</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -79,7 +80,8 @@
 <!-- <footer class="footer mt-5" style="background-color:#F8B856;"> -->
   <div class="container">
     <div class="row">
-    	<span class="text-monospace align-baseline">QR Punch</span><!-- <br> -->
+    	<span class="text-monospace align-baseline">QR Punch</span>
+      <!-- <br> -->
       <!-- デバッグ -->
       <!-- <div class="container">
         <%# if Rails.env.development?%>

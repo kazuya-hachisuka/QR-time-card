@@ -15,11 +15,11 @@
 <!-- <script src="instascan.min.js"></script> -->
 <script>
   //PC以外ならモバイル用のQR看取り画面へジャンプ
-  var ua = navigator.userAgent;
-  var redirectPass = 'cameras/index';
-  if(ua.search(/iPhone/) != -1 || ua.search(/iPad/) != -1 || ua.search(/iPod/) != -1 || ua.search(/Android/) != -1){
-      location.href = redirectPass;
-  }//ここまで
+  // var ua = navigator.userAgent;
+  // var redirectPass = 'cameras/index';
+  // if(ua.search(/iPhone/) != -1 || ua.search(/iPad/) != -1 || ua.search(/iPod/) != -1 || ua.search(/Android/) != -1){
+  //     location.href = redirectPass;
+  // }//ここまで
 
   var videoTag = document.getElementById('preview');
   var info = document.getElementById('info');
