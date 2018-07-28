@@ -2,26 +2,28 @@
 	<div class="row justify-content-center mt-md-5">
 	  <div class="col-lg-9">
 	    <div class="card mt-5 mt-sm-2 shadow-lg" style="width:　20em;">
-	      <div class="card-header text-center h4" style="background-color:#F08300;">
+	      <div class="card-header text-center h3" style="background-color:#F08300;">
 	      	<%= @staff.store.store_name %>
 	      </div>
 
-	      <div id="day" class="m-3 text-center"></div>
+	      <div id="day" class="m-3 text-center font-weight-bold" style="font-size:2em;"></div>
 
 	      <div id="clock" class="text-center"style="padding:5px;"></div>
 
-	      <p class="text-center font-weight-bold mt-2">
-	      	<%= @staff.family_name %>
-	      	<%= @staff.given_name %>
-	      	</p>
+	      <h4 class="text-center font-weight-bold m-3">
+	      	<span class="border-bottom">
+		      	<%= @staff.family_name %>
+		      	<%= @staff.given_name %>
+	      	</span>
+	      </h4>
 
-	        <div class="inline-group text-center">
+	        <div class="inline-group text-center mt-3">
 
 					<% if @staff.worked %>
 
 					<% else @staff.status == 0 %>
 
-						  <%= link_to  staff_works_path(params[:staff_id]), class:"btn btn-outline-info badge-pill mb-3 col-1", method: :post do %>
+						  <%= link_to  staff_works_path(params[:staff_id]), class:"btn btn-outline-info  btn-lg mb-3 col-1", method: :post do %>
 						  出勤
 						  <% end %>
 
@@ -29,15 +31,15 @@
 
 						<% if @staff.status == 1 %>
 
-							<% work = Work.all.where(out: nil) %>
+							<% work = @staff.works.where(out: nil) %>
 
 							  <% work.each do |f| %>
 
-							  	<%= link_to staff_work_break_in_path([@staff.id],[f.id]), {:controller => "works", :action => "breaks_create", class:"btn btn-success badge-pill mb-3 col-1", method: :post} do %>
+							  	<%= link_to staff_work_break_in_path([@staff.id],[f.id]), {:controller => "works", :action => "breaks_create", class:"btn btn-success  btn-lg mb-3 col-1", method: :post} do %>
 							  	休憩
 							  	<% end %>
 
-							  	<%= link_to  staff_shift_out_path(params[:staff_id],f.id),class:"btn btn-danger badge-pill mb-3 col-1", method: :patch do %>
+							  	<%= link_to  staff_shift_out_path(params[:staff_id],f.id),class:"btn btn-danger  btn-lg mb-3 col-1", method: :patch do %>
 							  	退勤
 							  	<% end %>
 
@@ -45,22 +47,22 @@
 
 						<% elsif @staff.status == 2 %>
 
-							<% work = Work.all.where(out: nil) %>
+							<% work = @staff.works.where(out: nil) %>
 
 								<% work.each do |f| %>
 
-									<%= link_to '戻り',staff_work_break_out_path([@staff.id],[f.id]), class:"btn btn-warning badge-pill mb-3 col-1", method: :patch %>
+									<%= link_to '戻り',staff_work_break_out_path([@staff.id],[f.id]), class:"btn btn-warning  btn-lg mb-3 col-1", method: :patch %>
 
 								<% end %>
 
 						<% else %>
 
-							<% work = Work.all.where(out: nil) %>
+							<% work = @staff.works.where(out: nil) %>
 
 						 		<% work.each do |f| %>
 
 
-						    	<%= link_to  staff_shift_out_path(params[:staff_id],f.id),class:"btn btn-danger badge-pill mb-3 col-1", method: :patch do %>
+						    	<%= link_to  staff_shift_out_path(params[:staff_id],f.id),class:"btn btn-danger  btn-lg mb-3 col-1", method: :patch do %>
 						    	退勤
 						    	<% end %>
 
