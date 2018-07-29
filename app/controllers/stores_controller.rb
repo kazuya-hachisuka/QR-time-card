@@ -31,6 +31,7 @@ class StoresController < ApplicationController
 
 	def store_total_work
 		@store = Store.find(params[:store_id])
+		@staff = @store.staffs
 		@breaks = 0
 		@outyet = 0
 		@store_total_times = 0
@@ -39,13 +40,6 @@ class StoresController < ApplicationController
 	    	unless workday.out.present?
 	    		@outyet += 1
 	    	end
-
-	      # workday.breaks.each do |break_time|
-       #    unless break_time.break_out.blank?
-       #      off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone)
-       #      @breaks += off_time
-       #    end
-	      # end
 	    end
 	  end
 	  #ransack
@@ -65,7 +59,6 @@ class StoresController < ApplicationController
 		    end
 	    end
 	  end
-
 
 	end
 

@@ -1,6 +1,6 @@
 <div class="container py-5">
 	<div class="row justify-content-center">
-		<div class="card">
+		<div class="card w-100">
 			<div class="card-header" style="background-color:#fb8303;">
 				<h4><%= @store.store_name %></h4>
 				<strong>出勤中 <%= @outyet %>名</strong>
@@ -35,9 +35,22 @@
 								  <td>
 								    <%= link_to "#{staff.family_name}#{staff.given_name}",staff_path(staff), class:"text-dark" %>
 								  </td>
-								  <td><%= h_mm(totalwork(staff.works)) %></td>
-								  <td><%= h_mm(total_break(staff)) %></td>
-									<td><%= h_mm(totalwork(staff.works) - total_break(staff)) %></td>
+								  <% work_total = 0 %>
+								  <% break_total = 0 %>
+									<% @working = @works.where(staff_id: staff.id) %>
+									<% @working.each do  |work_time| %>
+										<% if work_time.out != nil %>
+										<% work_total += work_time.out.in_time_zone - work_time.in.in_time_zone %>
+										<% end %>
+											<% work_time.breaks.each do |break_time| %>
+												<% unless break_time.break_out.blank? %>
+													<% break_total += break_time.break_out.in_time_zone - break_time.break_in.in_time_zone %>
+												<% end %>
+											<% end %>
+									<% end %>
+								  <td><%= h_mm(work_total) %></td>
+								  <td><%= h_mm(break_total) %></td>
+									<td><%= h_mm(work_total - break_total) %></td>
 								</tr>
 						</tbody>
 						<% end %>
@@ -46,4 +59,3 @@
 		</div>
 	</div>
 </div>
-
