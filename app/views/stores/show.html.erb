@@ -1,83 +1,97 @@
-<div class="container pt-5">
-  <div class="row justify-content-center">
+<div class="container py-5">
+	<div class="row justify-content-center">
+		<div class="card w-100 shadow-lg">
+			<div class="card-header" style="background-color:#fb8303;">
+				<span class="h3 font-weight-bold">
+					<% if @store.staffs.present? %>
+						<%= @store.store_name %>(<%= @store.staffs.count %>名)
+					<% else %>
+						<%= @store.store_name%> (所属スタッフ数0名)
+					<% end %>
+					</span>
+				<%= link_to "店舗一覧へ", stores_path, class:"text-secondary" %>
+				<div class="form-inline float-right">
+			  	<%= search_form_for @search, url:store_path do |f| %>
+						<%= f.date_select :in_gteq, {include_blank: true, use_month_numbers: true, date_separator: ' / ', start_year: 2018,}, class: "form-control" %> 〜
+						<%= f.date_select :in_lteq, {use_month_numbers: true, date_separator: ' / ', default: Date.today,start_year: 2018}, class: "form-control" %>
+						<%= f.submit "検索",class:"btn btn-outline-dark btn-sm" %>
+						<%= link_to '検索条件クリア', request.path,class:"btn btn-outline-secondary btn-sm" %>
+					<% end %>
+				</div>
+			</div>
+			<div class="card-body">
+				<% if @outyet != nil %>
+				<strong class="text-danger" style="font-size:20px;">出勤中 <%= @outyet %>名</strong>
+				<% end %>
+				<div class="card-text float-right mb-3">
+					<strong class="border-bottom text-secondary" style="font-size:20px;">勤怠合計&nbsp;<%= h_mm(@sum) %>&emsp;</strong>
+					<strong class="border-bottom text-secondary" style="font-size:20px;">休憩合計&nbsp;<%= h_mm(@offtime) %>&emsp;</strong>
+					<strong class="border-bottom" style="font-size:20px;">実働合計&nbsp;<%= h_mm(@sum - @offtime) %>&emsp;</strong>
+				</div>
+					<table class="table table">
+						<thead>
+							<tr>
+								<th class="text-secondary">Staff</th>
+								<th class="text-secondary">勤務時間</th>
+								<th class="text-secondary">休憩時間</th>
+								<th class="text-secondary">総労働時間</th>
+							</tr>
 
-      <div class="card border-secondary shadow-lg w-75">
-        <div class="card-header" style="background-color:#fb8303;">
-          <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-              <% if @store.staffs.present? %>
-              <span class="nav-link active font-weight-bold lead text-dark" style="background-color:#fb8303;"><%= @store.store_name%> (所属スタッフ数<%= @store.staffs.count %>名)</span>
-            </li>
+						</thead>
+						<tbody>
+						  <% @store.staffs.each do |staff| %>
+								<tr>
+								  <td>
+								    <%= link_to "#{staff.family_name}#{staff.given_name}",staff_path(staff), class:"text-dark" %>
+								  </td>
+							  <% work_total = 0 %>
 
-            <% else %>
-              <span class="nav-link active lead" style="background-color:#fb8303;"><%= @store.store_name%> (所属スタッフ数0名)</span>
+							  <% break_total = 0 %>
 
-            <% end %>
+								<% @working = @works.where(staff_id: staff.id) %>
 
-            <li class="nav-item">
-              <%= link_to "店舗一覧", stores_path, class:"nav-link text-secondary" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "勤怠一覧", stores_total_work_path(@store), class:"nav-link text-secondary" %>
-            </li>
-          </ul>
-        </div>
-        <div class="card-body">
+									<% @working.each do  |work_time| %>
+										<% if work_time.out != nil %>
+										<% work_total += work_time.out.in_time_zone - work_time.in.in_time_zone %>
+										<% end %>
+											<% work_time.breaks.each do |break_time| %>
+												<% unless break_time.break_out.blank? %>
+													<% break_total += break_time.break_out.in_time_zone - break_time.break_in.in_time_zone %>
+												<% end %>
+											<% end %>
+									<% end %>
+								  <td><%= h_mm(work_total) %></td>
+								  <td><%= h_mm(break_total) %></td>
+									<td><%= h_mm(work_total - break_total) %></td>
+								</tr>
+								<% end %>
+						</tbody>
+					</table>
+          <button type="button" class="btn btn-outline-info float-right" data-toggle="modal" data-target="#ModalCenter">編集</button>
+          <!-- モーダルの設定 -->
+          <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
 
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th class="text-secondary">スタッフ名</td>
-                </tr>
-              </thead>
-              <tbody>
-                <% if @store.staffs.present? %>
-
-                    <% @store.staffs.each do |staff| %>
-                  <tr>
-                    <td>
-                      <%= link_to "#{staff.family_name}#{staff.given_name}",staff_path(staff), class:"text-dark" %>
-                    </td>
-                      <% end %>
-                  </tr>
-                <% else %>
-
-                  <tr>
-                    <td>スタッフはいません</td>
-                  </tr>
-
-                <% end %>
-
-              </tbody>
-            </table>
-
-            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ModalCenter">編集</button>
-
-            <!-- モーダルの設定 -->
-            <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-
-                  <div class="modal-body">
-                    <%= render 'stores/edit', store:@store %>
-
-                  </div>
-
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                  </div>
+                <div class="modal-body">
+                  <%= render 'stores/edit', store:@store %>
 
                 </div>
 
-              </div>
-            </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                </div>
 
-        </div>
-      </div>
-  </div>
+              </div>
+
+            </div>
+          </div>
+			</div>
+		</div>
+	</div>
 </div>
