@@ -15,22 +15,6 @@ class StoresController < ApplicationController
 
 	def show
 		@store = Store.find(params[:id])
-	end
-
-	def update
-		@store = Store.find(params[:id])
-		@store.update(params_store)
-		redirect_to  stores_path
-	end
-
-	def destroy
-		store = Store.find(params[:id])
-		store.destroy
-		redirect_to stores_path
-	end
-
-	def store_total_work
-		@store = Store.find(params[:store_id])
 		@staff = @store.staffs
 		@breaks = 0
 		@outyet = 0
@@ -59,7 +43,18 @@ class StoresController < ApplicationController
 		    end
 	    end
 	  end
+	end
 
+	def update
+		@store = Store.find(params[:id])
+		@store.update(params_store)
+		redirect_to  stores_path
+	end
+
+	def destroy
+		store = Store.find(params[:id])
+		store.destroy
+		redirect_to stores_path
 	end
 
 	private
