@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="card">
-      <div class="card-header">管理者ログイン</div>
+    <div class="card w-50">
+      <div class="card-header text-center h4 font-weight-bold" style="background-color:#fb8303;">管理者ログイン</div>
         <div class="card-body">
 
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -17,11 +17,11 @@
                 <%= f.label :remember_me %>
             <% end -%>
 
-              <%= f.submit "Log in", class:"btn btn-info mt-2" %>
+              <%= f.submit "ログイン", class:"btn btn-info mt-2 float-right" %>
             </div>
           <% end %>
 
-          <%= render "admins/shared/links" %>
+          <%#= render "admins/shared/links" %>
         </div>
     </div>
   </div>
