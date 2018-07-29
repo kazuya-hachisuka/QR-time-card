@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   	registrations: 'admins/registrations'
   }
 
+  get 'admins' => 'admins#index', as: 'admin_index'
+
+  get 'admins/:admin_id/edit' => 'admins#edit', as: 'admins_edit'
+
   root'cameras#show'
 
   resources :stores,only:[:index,:show,:new,:create,:update,:destroy]

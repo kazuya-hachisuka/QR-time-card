@@ -9,6 +9,7 @@ class Admins::RegistrationsController < Devise::RegistrationsController
   # GET /resource/sign_up
   def new
     @resource = Admin.new
+    @store = Store.all
     if admin_signed_in?
       if current_admin.is_main_administer == true
         super
@@ -95,4 +96,10 @@ class Admins::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  protected
+
+  def update_resource(resource, params)
+   resource.update_without_current_password(params)
+  end
 end

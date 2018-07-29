@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20180720103014) do
     t.string "family_name_kana", null: false
     t.string "given_name", null: false
     t.string "given_name_kana", null: false
-    t.boolean "is_main_administer", null: false
+    t.boolean "is_main_administer", default: false, null: false
     t.integer "store_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
