@@ -25,9 +25,11 @@
 
 	          <label for="input">メール</label>
 	            <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control" %>
-
+	           <% if @admin.is_main_administer == true %>
+	           <% else %>
 	           <p class="badge badge-light mt-2">所属店舗</p>
 	            <%= f.collection_select :store_id ,@store ,:id ,:store_name ,{}, {class:"form-control"} %>
+	            <% end %>
 
 	          <%= f.submit "更新", class:"btn btn-info btn-sm mt-2" %>
 				</div>
