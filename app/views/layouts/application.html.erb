@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Kintaikun(仮)</title>
+    <title>QR-TimeCard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= csrf_meta_tags %>
 
@@ -14,7 +14,7 @@
 	<nav class="navbar navbar-expand-lg" style="background-color: #ff8e00;">
     <!-- 切り替えボタンの設定 -->
     <a class="text-monospace text-dark" href="#" data-toggle="modal" data-target="#exampleModalCenter">
-      QR-timecard
+      QR-TimeCard
     </a>
 
     <!-- モーダルの設定 -->
@@ -56,38 +56,68 @@
 
   <% if admin_signed_in? %>
 
-    <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
-      <span class="navbar-toggler-icon my-toggler"></span>
-    </button>
+    <% if current_admin.is_main_administer == true %>
 
-    <div id="menu" class="collapse navbar-collapse">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">店舗メニュー</a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <span class="dropdown-item">
-              <%= link_to "店舗一覧", stores_path,class:"nav-link text-dark" %>
-            </span>
-            <span class="dropdown-item">
-              <%= link_to "店舗追加", new_store_path, class:"nav-link text-dark" %>
-            </span>
-          </div>
-        </li><!-- ./dropdown-menu -->
-        <li class="nav-item">
-          <%= link_to "スタッフ一覧", staffs_path, class:"nav-link text-dark" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "スタッフ追加", new_staff_path, class:"nav-link text-dark" %>
-        </li>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
+        <span class="navbar-toggler-icon my-toggler"></span>
+      </button>
 
-        <% if current_admin.is_main_administer == true %>
+      <div id="menu" class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">店舗メニュー</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <span class="dropdown-item">
+                <%= link_to "店舗一覧", stores_path,class:"nav-link text-dark" %>
+              </span>
+              <span class="dropdown-item">
+                <%= link_to "店舗追加", new_store_path, class:"nav-link text-dark" %>
+              </span>
+            </div>
+          </li><!-- ./dropdown-menu -->
 
-          <li class="nav-item"><%= link_to "管理者追加", new_admin_registration_path, class:"nav-link text-dark" %>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">スタッフメニュー</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <span class="dropdown-item">
+                <%= link_to "スタッフ一覧", staffs_path, class:"nav-link text-dark" %>
+              </span>
+              <span class="dropdown-item">
+                <%= link_to "スタッフ追加", new_staff_path, class:"nav-link text-dark" %>
+              </span>
+            </div>
+          </li><!-- ./dropdown-menu -->
+
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">管理者メニュー</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <span class="dropdown-item">
+                <%= link_to "管理者一覧", admins_path, class:"nav-link text-dark" %>
+              </span>
+              <span class="dropdown-item">
+                <%= link_to "管理者追加", new_admin_registration_path, class:"nav-link text-dark" %>
+              </span>
+            </div>
+          </li><!-- ./dropdown-menu -->
+        </ul>
+      </div>
+
+    <% else %>
+
+      <div id="menu" class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <%= link_to "店舗一覧", stores_path,class:"nav-link text-dark" %>
           </li>
-        <% end %>
-      </ul>
-    </div>
+          <li class="nav-item">
+            <%= link_to "スタッフ追加", new_staff_path, class:"nav-link text-dark" %>
+          </li>
+          <li class="nav-item"><%= link_to "管理者一覧", admins_path, class:"nav-link text-dark" %>
+          </li>
+        </ul>
+      </div>
 
+   <% end %>
   <% end %>
 
 </nav>
@@ -102,7 +132,7 @@
 <!-- <footer class="footer mt-5" style="background-color:#F8B856;"> -->
   <div class="container">
     <div class="row">
-    	<span class="text-monospace align-baseline">QR Punch</span>
+    	<span class="text-monospace align-baseline">QR-TimeCard</span>
       <!-- <br> -->
       <!-- デバッグ -->
       <!-- <div class="container">
