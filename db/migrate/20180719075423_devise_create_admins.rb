@@ -36,7 +36,7 @@ class DeviseCreateAdmins < ActiveRecord::Migration[5.1]
       t.string :family_name_kana, null: false
       t.string :given_name, null: false
       t.string :given_name_kana, null: false
-      t.boolean :is_main_administer, null: false, index: true, defauls: false
+      t.boolean :is_main_administer, null: false, index: true, default: false
       t.integer :store_id
       t.timestamps null: false
     end

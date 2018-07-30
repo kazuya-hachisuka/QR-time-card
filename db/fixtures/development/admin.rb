@@ -8,3 +8,14 @@ Admin.seed do |s|
 	s.password = "password"
 	s.is_main_administer = "true"
 end
+
+Admin.seed do |s|
+	s.id = 2
+	s.family_name = "サブ"
+	s.given_name = "管理"
+	s.family_name_kana = "サブ"
+	s.given_name_kana = "カンリ"
+	s.email = "2@2"
+	s.password = "password"
+	s.is_main_administer = "false"
+end

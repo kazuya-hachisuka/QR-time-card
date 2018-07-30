@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :admins,controllers: {
-  	sessions: 'admins/sessions',
-  	registrations: 'admins/registrations'
+  devise_for :admins, controllers: {
+	sessions:      'admins/sessions',
+  passwords:     'admins/passwords',
+	registrations: 'admins/registrations'
   }
+
+  resources :admins, except: [:destroy]
 
   root'cameras#show'
 

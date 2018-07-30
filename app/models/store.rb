@@ -1,4 +1,4 @@
 class Store < ApplicationRecord
-	#belongs_to :admin
+	has_many :admins
 	has_many :staffs
 end
