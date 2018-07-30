@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :stores,only:[:index,:show,:new,:create,:update,:destroy]
 
-  resources :staffs, only:[:create,:new,:show,:update,:destroy] do
+  resources :staffs, only:[:index,:create,:new,:show,:update] do
 
     resources :works,only:[:create,:new,:update,:index,:edit,:destroy]
 
