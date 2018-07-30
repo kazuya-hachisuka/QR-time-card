@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180720103014) do
+ActiveRecord::Schema.define(version: 20180730104849) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -53,7 +53,6 @@ ActiveRecord::Schema.define(version: 20180720103014) do
     t.string "qrcode"
     t.integer "status", default: 0, null: false
     t.integer "store_id", null: false
-    t.integer "work_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
