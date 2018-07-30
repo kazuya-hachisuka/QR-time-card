@@ -32,6 +32,12 @@ class AdminsController < ApplicationController
 	  end
   end
 
+  def destroy
+  	admin = Admin.find(params[:id])
+  	admin.destroy
+  	redirect_to admins_path
+  end
+
   private
 
 	def admin_params
