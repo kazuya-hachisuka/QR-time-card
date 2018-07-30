@@ -1,27 +1,36 @@
-<table class="table mt-5">
-	<thead style="background-color:#fb8303;">
-		<tr>
-			<th>スタッフ一覧</th>
-			<th>所属店舗</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		<% @staff.each do |staff| %>
-		<tr>
-			<td>
-				<%= staff.family_name %>
-				<%= staff.given_name %>
-			</td>
-			<% if staff.store_id.present? %>
-				<td><%= staff.store.store_name %></td>
-			<% else %>
-				<td>所属店舗無し</td>
-				<% end %>
-				<td><%= link_to "詳細", staff_path(staff) %></td>
-		</tr>
+<div class="container py-5">
+	<div class="row justify-content-center">
+		<div class="card w-75 shadow-lg">
+			<div class="card-header h3 font-weight-bold" style="background-color:#fb8303;">スタッフ一覧</div>
+				<div class="card-body">
+					<table class="table table-hover">
+						<thead">
+							<tr>
+								<th class="h5 font-weight-bold">名前</th>
+								<th class="h5 font-weight-bold">所属店舗</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @staff.each do |staff| %>
+							<tr>
+								<th>
+									<%= staff.family_name %>
+									<%= staff.given_name %>
+								</th>
+								<% if staff.store_id.present? %>
+									<td><%= staff.store.store_name %></td>
+								<% else %>
+									<td>所属店舗無し</td>
+									<% end %>
+									<td><%= link_to "詳細", staff_path(staff), class:"btn btn-outline-info btn-sm " %></td>
+							</tr>
 
-		<% end %>
+							<% end %>
 
-	</tbody>
-</table>
+						</tbody>
+					</table>
+				</div>
+		</div>
+	</div>
+</div>

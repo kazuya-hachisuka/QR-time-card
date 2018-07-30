@@ -1,5 +1,9 @@
 class StaffsController < ApplicationController
-	  def new
+	def index
+    @staff = Staff.all
+  end
+
+  def new
   	@staff = Staff.new
     @store = Store.all
   end
@@ -9,10 +13,6 @@ class StaffsController < ApplicationController
   	@staff.save
   	puts @staff.id
   	redirect_to staff_path(@staff.id)
-  end
-
-  def index
-    @staff = Staff.find(params[:id])
   end
 
   def update
