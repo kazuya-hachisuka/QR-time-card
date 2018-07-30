@@ -1,38 +1,37 @@
 <div class="container py-5">
 	<p class="flash-message text-info text-center">
       <%= flash[:admin_updated] %>
+      <%= flash[:admin_update_faled] %>
     </p>
 	<div class="row justify-content-center">
-		<div class="card">
+		<div class="card shadow-lg">
 			<div class="card-header text-center" style="background-color:#fb8303;">
 				<span class="font-weight-bold h4">管理者情報編集</span>
 			</div>
 			<div class="card-body">
+				<%= form_for (@admin) do |f| %>
 				<div class="form-group">
-					<div class="form-group">
-            <label for="input">名前</label>
-              <div class="form-inline">
-             <%= form_for (@admin) do |f| %>
-              <%= f.text_field :family_name, autofocus: true, autocomplete: "姓", class:"form-control mr-2", placeholder: "姓" %>
-              <%= f.text_field :given_name, autofocus: true, autocomplete: "名", class:"form-control", placeholder: "名" %>
-              </div>
+          <label for="input">名前</label>
+	          <div class="form-inline">
+	          <%= f.text_field :family_name, autofocus: true, autocomplete: "姓", class:"form-control mr-2", placeholder: "姓" %>
+	          <%= f.text_field :given_name, autofocus: true, autocomplete: "名", class:"form-control", placeholder: "名" %>
+	          </div>
 
-              <label for="input">フリガナ</label>
-                <div class="form-inline">
-                  <%= f.text_field :family_name_kana, autofocus: true, autocomplete: "セイ", class:"form-control mr-2", placeholder: "セイ" %>
-                  <%= f.text_field :given_name_kana, autofocus: true, autocomplete: "メイ", class:"form-control", placeholder: "メイ" %>
-                </div>
+	          <label for="input">フリガナ</label>
+	            <div class="form-inline">
+	              <%= f.text_field :family_name_kana, autofocus: true, autocomplete: "セイ", class:"form-control mr-2", placeholder: "セイ" %>
+	              <%= f.text_field :given_name_kana, autofocus: true, autocomplete: "メイ", class:"form-control", placeholder: "メイ" %>
+	            </div>
 
-              <label for="input">メール</label>
-                <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control" %>
+	          <label for="input">メール</label>
+	            <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control" %>
 
-               <p class="badge badge-light mt-2">所属店舗</p>
-                <%= f.collection_select :store_id ,@store ,:id ,:store_name ,{}, {class:"form-control"} %>
+	           <p class="badge badge-light mt-2">所属店舗</p>
+	            <%= f.collection_select :store_id ,@store ,:id ,:store_name ,{}, {class:"form-control"} %>
 
-              <%= f.submit "作成", class:"btn btn-info btn-sm mt-2" %>
-          </div>
-        		<% end %>
+	          <%= f.submit "更新", class:"btn btn-info btn-sm mt-2" %>
 				</div>
+				<% end %>
 			</div>
 		</div>
 	</div>

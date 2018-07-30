@@ -1,2 +1,27 @@
-<h1>Staff#index</h1>
-<p>Find me in app/views/staff/index.html.erb</p>
+<table class="table mt-5">
+	<thead style="background-color:#fb8303;">
+		<tr>
+			<th>スタッフ一覧</th>
+			<th>所属店舗</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @staff.each do |staff| %>
+		<tr>
+			<td>
+				<%= staff.family_name %>
+				<%= staff.given_name %>
+			</td>
+			<% if staff.store_id.present? %>
+				<td><%= staff.store.store_name %></td>
+			<% else %>
+				<td>所属店舗無し</td>
+				<% end %>
+				<td><%= link_to "詳細", staff_path(staff) %></td>
+		</tr>
+
+		<% end %>
+
+	</tbody>
+</table>
