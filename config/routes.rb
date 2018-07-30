@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 	registrations: 'admins/registrations'
   }
 
-  resources :admins, except: [:destroy]
+  resources :admins
 
   root'cameras#show'
 

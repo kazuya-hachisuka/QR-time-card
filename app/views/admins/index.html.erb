@@ -2,6 +2,9 @@
 	<div class="row justify-content-center">
 		<div class="card w-75 shadow-lg">
 			<div class="card-body">
+			<p class="flash-message text-info text-center">
+				<%= flash[:admin_updated] %>
+			</p>
 				<table class="table">
 					<thead style="background-color:#fb8303;">
 						<tr>
@@ -14,7 +17,7 @@
 						<% @admin.each do |admin| %>
 						<tr class="bg-light">
 							<% if admin.is_main_administer == true %>
-							<td class="text-info">
+							<td class="text-danger">
 								<%= admin.family_name %>
 								<%= admin.given_name %>
 							</td>
@@ -26,6 +29,8 @@
 							<% end %>
 								<% if admin.store_id.present? %>
 									<td><%= admin.store.store_name %></td>
+								<% elsif admin.is_main_administer == true %>
+									<td class="text-danger">メイン管理者</td>
 								<% else %>
 									<td>所属店舗無し</td>
 								<% end %>

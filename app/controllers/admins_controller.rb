@@ -23,13 +23,19 @@ class AdminsController < ApplicationController
     else
 			if @admin.update(admin_params)
 				sign_in(current_admin, :bypass => true)
-				redirect_to edit_admin_path(@admin.id)
+				redirect_to admins_path
 				flash[:admin_updated] = "管理者 #{@admin.family_name}#{@admin.given_name}の登録情報を変更しました"
 			else
 				redirect_to edit_admin_path(current_admin.id)
 	      flash[:admin_update_faled] = "変更できませんでした。入力内容を確認してください。"
 	    end
 	  end
+  end
+
+  def destroy
+  	admin = Admin.find(params[:id])
+  	admin.destroy
+  	redirect_to admins_path
   end
 
   private
