@@ -14,7 +14,7 @@
 						<% @admin.each do |admin| %>
 						<tr class="bg-light">
 							<% if admin.is_main_administer == true %>
-							<td class="text-info">
+							<td class="text-danger">
 								<%= admin.family_name %>
 								<%= admin.given_name %>
 							</td>
@@ -27,7 +27,7 @@
 								<% if admin.store_id.present? %>
 									<td><%= admin.store.store_name %></td>
 								<% elsif admin.is_main_administer == true %>
-									<td>メイン管理者</td>
+									<td class="text-danger">メイン管理者</td>
 								<% else %>
 									<td>所属店舗無し</td>
 								<% end %>
