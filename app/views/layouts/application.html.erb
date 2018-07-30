@@ -65,7 +65,7 @@
       <div id="menu" class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">店舗メニュー</a>
+            <a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">店舗メニュー</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <span class="dropdown-item">
                 <%= link_to "店舗一覧", stores_path,class:"nav-link text-dark" %>
@@ -77,7 +77,7 @@
           </li><!-- ./dropdown-menu -->
 
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">スタッフメニュー</a>
+            <a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">スタッフメニュー</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <span class="dropdown-item">
                 <%= link_to "スタッフ一覧", staffs_path, class:"nav-link text-dark" %>
@@ -89,7 +89,7 @@
           </li><!-- ./dropdown-menu -->
 
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">管理者メニュー</a>
+            <a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">管理者メニュー</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <span class="dropdown-item">
                 <%= link_to "管理者一覧", admins_path, class:"nav-link text-dark" %>
@@ -104,15 +104,19 @@
 
     <% else %>
 
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
+        <span class="navbar-toggler-icon my-toggler"></span>
+      </button>
+
       <div id="menu" class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+          <li class="nav-item font-weight-bold">
             <%= link_to "店舗一覧", stores_path,class:"nav-link text-dark" %>
           </li>
-          <li class="nav-item">
+          <li class="nav-item font-weight-bold">
             <%= link_to "スタッフ追加", new_staff_path, class:"nav-link text-dark" %>
           </li>
-          <li class="nav-item"><%= link_to "管理者一覧", admins_path, class:"nav-link text-dark" %>
+          <li class="nav-item font-weight-bold"><%= link_to "管理者一覧", admins_path, class:"nav-link text-dark" %>
           </li>
         </ul>
       </div>

@@ -1,7 +1,4 @@
 class AdminsController < ApplicationController
-	# before_action :authenticate_admin
- #  before_action :admin_exists, except: [:index]
- #  before_action :suspending_admin_account
 	def index
 		@admin = Admin.all
 		@staff = Staff.all

@@ -1,40 +1,56 @@
 <div class="container py-5">
 	<div class="row justify-content-center">
 		<div class="card w-75 shadow-lg">
+			<div class="card-header h3 font-weight-bold" style="background-color:#fb8303;">管理者一覧
+        </div>
 			<div class="card-body">
 			<p class="flash-message text-info text-center">
 				<%= flash[:admin_updated] %>
 			</p>
-				<table class="table">
-					<thead style="background-color:#fb8303;">
+				<table class="table table-hover">
+					<thead>
 						<tr>
-							<th>管理者</th>
-							<th>担当店舗</th>
+							<th class="h5 font-weight-bold">名前</th>
+							<th class="h5 font-weight-bold">担当店舗</th>
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						<% @admin.each do |admin| %>
-						<tr class="bg-light">
+						<tr>
 							<% if admin.is_main_administer == true %>
-							<td class="text-danger">
+							<th class="text-danger">
 								<%= admin.family_name %>
 								<%= admin.given_name %>
-							</td>
+							</th>
 							<% else %>
-								<td>
-								<%= admin.family_name %>
-								<%= admin.given_name %>
-							</td>
+								<th>
+									<%= admin.family_name %>
+									<%= admin.given_name %>
+								</th>
 							<% end %>
 								<% if admin.store_id.present? %>
+
 									<td><%= admin.store.store_name %></td>
+
 								<% elsif admin.is_main_administer == true %>
+
 									<td class="text-danger">メイン管理者</td>
+
 								<% else %>
+
 									<td>所属店舗無し</td>
+
 								<% end %>
-							<td><%= link_to "編集", edit_admin_path(admin), class:"btn btn-outline-secondary" %></td>
+
+							<% if current_admin.is_main_administer == true %>
+
+							<td><%= link_to "編集", edit_admin_path(admin), class:"btn btn-outline-info" %></td>
+
+							<% else %>
+
+							<td><%= link_to "編集", edit_admin_path(admin),class:"btn btn-outline-secondary btn-sm disabled" %></td>
+							<% end %>
 						</tr>
 
 						<% end %>

@@ -19,10 +19,15 @@
 									<%= staff.given_name %>
 								</th>
 								<% if staff.store_id.present? %>
+
 									<td><%= staff.store.store_name %></td>
+
 								<% else %>
+
 									<td>所属店舗無し</td>
+
 									<% end %>
+
 									<td><%= link_to "詳細", staff_path(staff), class:"btn btn-outline-info btn-sm " %></td>
 							</tr>
 
