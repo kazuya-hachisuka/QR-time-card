@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :admins,controllers: {
-  	sessions: 'admins/sessions',
-  	registrations: 'admins/registrations'
+  devise_for :admins, controllers: {
+	sessions:      'admins/sessions',
+  passwords:     'admins/passwords',
+	registrations: 'admins/registrations'
   }
 
-  get 'admins' => 'admins#index', as: 'admin_index'
-
-  get 'admins/:admin_id/edit' => 'admins#edit', as: 'admins_edit'
+  resources :admins, except: [:destroy]
 
   root'cameras#show'
 

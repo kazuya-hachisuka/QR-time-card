@@ -1,4 +1,7 @@
 <div class="container py-5">
+	<p class="flash-message text-info text-center">
+      <%= flash[:admin_updated] %>
+    </p>
 	<div class="row justify-content-center">
 		<div class="card">
 			<div class="card-header text-center" style="background-color:#fb8303;">
@@ -9,7 +12,7 @@
 					<div class="form-group">
             <label for="input">名前</label>
               <div class="form-inline">
-              	<%= form_for @admin, url:admins_edit_path do |f| %>
+             <%= form_for (@admin) do |f| %>
               <%= f.text_field :family_name, autofocus: true, autocomplete: "姓", class:"form-control mr-2", placeholder: "姓" %>
               <%= f.text_field :given_name, autofocus: true, autocomplete: "名", class:"form-control", placeholder: "名" %>
               </div>
@@ -28,7 +31,7 @@
 
               <%= f.submit "作成", class:"btn btn-info btn-sm mt-2" %>
           </div>
-        <% end %>
+        		<% end %>
 				</div>
 			</div>
 		</div>
