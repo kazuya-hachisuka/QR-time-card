@@ -26,6 +26,8 @@
 							<% end %>
 								<% if admin.store_id.present? %>
 									<td><%= admin.store.store_name %></td>
+								<% elsif admin.is_main_administer == true %>
+									<td>メイン管理者</td>
 								<% else %>
 									<td>所属店舗無し</td>
 								<% end %>
