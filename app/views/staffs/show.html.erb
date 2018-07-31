@@ -57,15 +57,28 @@
 						</div>
 				  </div>
 
+				  <% midnight_works = 0 %>
+				  <% midnight_break = 0 %>
+
+				  <!-- 深夜帯の勤怠と休憩の計算 -->
+		    	<% @works.each do |w| %>
+		    		<% midnight_works += midnight(w.in,w.out) %>
+		    			<% w.breaks.each do |b| %>
+		    				<% unless b.break_out.blank? %>
+		    					<% midnight_break += midnight(b.break_in,b.break_out) %>
+		    				<% end %>
+		    			<% end %>
+					<% end %>
+
 			    <div class="card-body bg-light">
 				    <span class="card-title font-weight-bold">
 				    	<%= @staff.family_name %>
 					    <%= @staff.given_name %>
 					    <%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
 					   </span>
-					    	<p class="card-text pt-2 border-bottom">合計労働時間  <%= h_mm(totalwork(@works))%></p>
-					    	<p class="card-text border-bottom"> 合計休憩時間 <%= h_mm(@breaks) %></p>
-					    	<p class="card-text border-bottom"> 総労働時間 <%= h_mm(totalwork(@works) - @breaks) %></p>
+				    	<p class="card-text pt-2 border-bottom">合計労働時間  <%= h_mm(totalwork(@works))%></p>
+				    	<p class="card-text border-bottom"> 合計休憩時間 <%= h_mm(@breaks) %>(<%= h_mm(midnight_break) %>)</p>
+				    	<p class="card-text border-bottom"> 実働時間 <%= h_mm(totalwork(@works) - @breaks) %> (内深夜帯<%= h_mm(midnight_works) %>)</p>
 		  		</div>
 
 			    <table class="table table-hover">
@@ -77,7 +90,8 @@
 								<th>勤務時間</th>
 								<th>休憩時間</th>
 								<th>深夜時間</th>
-								<th>総労働時間</th>
+								<th>実働時間</th>
+								<th>休憩深夜</th>
 			        </tr>
 			      </thead>
 
@@ -113,7 +127,7 @@
 									<% off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone) %>
 
 									<% time += off_time %>
-
+									<%= h_mm(midnight(break_time.break_in,break_time.break_out)) %>
 								<% end %>
 
 							<% end %>
