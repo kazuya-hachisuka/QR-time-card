@@ -70,7 +70,7 @@
 
 					<% if current_admin.is_main_administer == true %>
 
-	          <button type="button" class="btn btn-outline-info float-right" data-toggle="modal" data-target="#ModalCenter">編集</button>
+	          <button type="button" class="btn btn-outline-info float-right" data-toggle="modal" data-target="#ModalCenter">店舗名編集</button>
 	          <!-- モーダルの設定 -->
 	          <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
 	            <div class="modal-dialog modal-dialog-centered" role="document">
@@ -84,6 +84,7 @@
 	                <div class="modal-body">
 
 	                  <%= render 'stores/edit', store:@store %>
+	                  <p class="text-center text-danger">※所属スタッフがいる場合削除は出来ません。</p>
 
 	                </div>
 
