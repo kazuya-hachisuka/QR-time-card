@@ -1,4 +1,6 @@
 class WorksController < ApplicationController
+	before_action :authenticate_admin!,:except=>[:new, :update, :create, :shift_out, :break_create, :break_update]
+
 	def index
 		@staff = Staff.find(params[:staff_id])
 	end
@@ -81,6 +83,7 @@ class WorksController < ApplicationController
 
 	def add_work
 		@staff = Staff.find(params[:staff_id])
+		store = Store.all
 		@work = Work.new
 		@break = @work.breaks.build
 	end

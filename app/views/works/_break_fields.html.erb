@@ -1,8 +1,8 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>休憩入</th>
-			<th>戻り</th>
+			<th class="text-muted h5 font-weight-bold">休憩入</th>
+			<th class="text-muted h5 font-weight-bold">戻り</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -10,12 +10,12 @@
 		<tr>
 			<td>
 				<span class="form-inline">
-					<%= f.datetime_select :break_in,{:use_month_numbers => true, :start_year => 2018, :date_separator => '/',:include_blank => true},class: "form-control" %>
+					<%= f.datetime_select :break_in,{:use_month_numbers => true, :start_year => 2018, :date_separator => '&ensp;/&ensp;',:time_separator => '&nbsp;:&nbsp;',:include_blank => true},class: "form-control" %>
 				</span>
 			</td>
 			<td>
 				<span class="form-inline">
-					<%= f.datetime_select :break_out,{:use_month_numbers => true, :start_year => 2018, :date_separator => '/',:include_blank => true},class: "form-control" %>
+					<%= f.datetime_select :break_out,{:use_month_numbers => true, :start_year => 2018, :date_separator => '&ensp;/&ensp;',:time_separator => '&nbsp;:&nbsp;',:include_blank => true},class: "form-control" %>
 				</span>
 			</td>
 		</tr>

@@ -1,4 +1,6 @@
 class StoresController < ApplicationController
+	before_action :authenticate_admin!
+
 	def index
 		@store = Store.all
 	end
@@ -58,6 +60,7 @@ class StoresController < ApplicationController
 	end
 
 	private
+
 	def params_store
 		params.require(:store).permit(:store_name,:admin_id,:staff_id)
 	end
