@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :admins
 
-  root'cameras#show'
+  root'cameras#scan'
 
   resources :stores,only:[:index,:show,:new,:create,:update,:destroy]
 
@@ -31,9 +31,9 @@ Rails.application.routes.draw do
 
   get 'staffs/:staff_id/works/show' => 'works#show'
 
-  get 'cameras/show' => 'cameras#show' #instascan モバイル用
+  get 'cameras/scan_mobile' => 'cameras#scan_mobile', as:'camera_mobile'#instascan PC用
 
-  get 'cameras/index' => 'cameras#index' #jsQR PC用
+  get 'cameras/scan' => 'cameras#scan', as:'camera' #jsQR モバイル用
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -1,7 +1,7 @@
 class CamerasController < ApplicationController
-	def index
+	def scan_mobile
 	end
 
-	def show
+	def scan
 	end
 end
