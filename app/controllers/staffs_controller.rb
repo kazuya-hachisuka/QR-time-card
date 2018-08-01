@@ -1,4 +1,5 @@
 class StaffsController < ApplicationController
+  before_action :authenticate_admin!
 	def index
     @staff = Staff.all
   end
@@ -34,16 +35,6 @@ class StaffsController < ApplicationController
     # ChunkyPNG::Image を Magick::Image に変換
     image = ChunkyPNG::RMagick.export(qr.to_img.resize(width, height))
 
-    # draw = Magick::Draw.new
-    # draw.annotate(image, 0, 0, width / 2, height - 2, "id:#{staff.id}") do
-    #   self.fill = '#000000'
-    #   self.align = Magick::LeftAlign
-    #   self.stroke = 'transparent'
-    #   self.pointsize = 8
-    #   self.text_antialias = true
-    #   self.kerning = 1
-    # end
-
     # Magick::Image を ChunkyPNG::Image に変換して、DetaUrl に
     @qrpng = ChunkyPNG::RMagick.import(image).to_data_url
     @staff.qrcode = @qrpng
@@ -69,6 +60,7 @@ class StaffsController < ApplicationController
   end
 
   private
+
   def staff_params
   	params.require(:staff).permit(:id,:qrcode,:family_name,:family_name_kana,:given_name,:given_name_kana,:store_id,:work_id)
   end
