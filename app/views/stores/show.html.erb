@@ -4,9 +4,9 @@
 			<div class="card-header" style="background-color:#fb8303;">
 				<span class="h3 font-weight-bold">
 					<% if @store.staffs.present? %>
-						<%= @store.store_name %>(<%= @store.staffs.count %>名)
+						<%= @store.store_name %>&ensp;(<%= @store.staffs.count %>名)
 					<% else %>
-						<%= @store.store_name%> (所属スタッフ数0名)
+						<%= @store.store_name%>&ensp;(0名)
 					<% end %>
 					</span>
 				<%= link_to "店舗一覧へ", stores_path, class:"text-secondary" %>
@@ -19,24 +19,47 @@
 					<% end %>
 				</div>
 			</div>
+
+			<!-- 深夜帯の勤怠と休憩の計算 -->
+			<% mid_night_works = 0 %>
+			<% mid_night_breaks = 0 %>
+    	<% @works.each do |w| %>
+	    	<% if @store.staffs.pluck(:id).include?(w.staff_id) && w.out != nil %>
+	    		<% mid_night_works += midnight(w.in,w.out) %>
+	    			<% w.breaks.each do |b| %>
+	    				<% unless b.break_out.blank? %>
+	    					<% mid_night_breaks += midnight(b.break_in,b.break_out) %>
+	    				<% end %>
+	    			<% end %>
+	    	<% end %>
+			<% end %>
+
 			<div class="card-body">
 				<% if @outyet != nil %>
-				<strong class="text-danger" style="font-size:20px;">出勤中 <%= @outyet %>名</strong>
+				<span class="text-danger font-weight-bold h4">出勤中 <%= @outyet %>名</span>
 				<% end %>
-				<div class="card-text float-right mb-3">
-					<strong class="border-bottom text-secondary" style="font-size:20px;">勤怠合計&nbsp;<%= h_mm(@sum) %>&emsp;</strong>
-					<strong class="border-bottom text-secondary" style="font-size:20px;">休憩合計&nbsp;<%= h_mm(@offtime) %>&emsp;</strong>
-					<strong class="border-bottom" style="font-size:20px;">実働合計&nbsp;<%= h_mm(@sum - @offtime) %>&emsp;</strong>
+				<div class="card-text float-right mb-5">
+					<span class="border-bottom text-secondary font-weight-bold h4" >
+						勤怠合計&nbsp;<%= h_mm(@sum - mid_night_works) %>&emsp;
+					</span>
+					<span class="border-bottom text-secondary font-weight-bold h4" >
+						深夜合計&nbsp;<%= h_mm(mid_night_works) %>&emsp;
+					</span>
+					<span class="border-bottom text-secondary font-weight-bold h4" >
+						休憩合計&nbsp;<%= h_mm(@offtime) %>&emsp;
+					</span>
+					<span class="border-bottom font-weight-bold h4" >
+						実働合計&nbsp;<%= h_mm(@sum - @offtime) %>&emsp;
+					</span>
 				</div>
-					<table class="table table">
+					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th class="text-secondary">Staff</th>
-								<th class="text-secondary">勤務時間</th>
-								<th class="text-secondary">休憩時間</th>
-								<th class="text-secondary">総労働時間</th>
+								<th class="text-secondary h5 font-weight-bold">Staff</th>
+								<th class="text-secondary h5 font-weight-bold">勤務時間</th>
+								<th class="text-secondary h5 font-weight-bold">休憩時間合計</th>
+								<th class="text-secondary h5 font-weight-bold">実働時間合計</th>
 							</tr>
-
 						</thead>
 						<tbody>
 						  <% @store.staffs.each do |staff| %>
@@ -50,19 +73,19 @@
 
 								<% @working = @works.where(staff_id: staff.id) %>
 
-									<% @working.each do  |work_time| %>
-										<% if work_time.out != nil %>
-										<% work_total += work_time.out.in_time_zone - work_time.in.in_time_zone %>
-										<% end %>
-											<% work_time.breaks.each do |break_time| %>
-												<% unless break_time.break_out.blank? %>
-													<% break_total += break_time.break_out.in_time_zone - break_time.break_in.in_time_zone %>
-												<% end %>
-											<% end %>
+								<% @working.each do  |work_time| %>
+									<% if work_time.out != nil %>
+									<% work_total += work_time.out.in_time_zone - work_time.in.in_time_zone %>
 									<% end %>
-								  <td><%= h_mm(work_total) %></td>
-								  <td><%= h_mm(break_total) %></td>
-									<td><%= h_mm(work_total - break_total) %></td>
+										<% work_time.breaks.each do |break_time| %>
+											<% unless break_time.break_out.blank? %>
+												<% break_total += break_time.break_out.in_time_zone - break_time.break_in.in_time_zone %>
+											<% end %>
+										<% end %>
+									<% end %>
+								  <th><%= h_mm(work_total) %></th>
+								  <th><%= h_mm(break_total) %></th>
+									<th><%= h_mm(work_total - break_total) %></th>
 								</tr>
 								<% end %>
 						</tbody>
@@ -70,7 +93,7 @@
 
 					<% if current_admin.is_main_administer == true %>
 
-	          <button type="button" class="btn btn-outline-info float-right" data-toggle="modal" data-target="#ModalCenter">編集</button>
+	          <button type="button" class="btn btn-outline-info float-right" data-toggle="modal" data-target="#ModalCenter">店舗名編集</button>
 	          <!-- モーダルの設定 -->
 	          <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
 	            <div class="modal-dialog modal-dialog-centered" role="document">
@@ -82,9 +105,8 @@
 	                </div>
 
 	                <div class="modal-body">
-
 	                  <%= render 'stores/edit', store:@store %>
-
+	                  <p class="text-center text-danger">※所属スタッフがいる場合削除は出来ません。</p>
 	                </div>
 
 	                <div class="modal-footer">

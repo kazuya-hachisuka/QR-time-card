@@ -29,13 +29,13 @@
 										<tr>
 											<td>
 												<div class="form-inline">
-													<%= f.datetime_select :in, {:use_month_numbers => true, :start_year => 2018, :date_separator => '&ensp;/&ensp;'}, class: "form-control" %>
+													<%= f.datetime_select :in, {:use_month_numbers => true, :start_year => 2018, :date_separator => '&ensp;/&ensp;',:time_separator => '&nbsp;:&nbsp;'}, class: "form-control" %>
 													</div>
 												</td>
 											<td></td>
 											<td>
 												<div class="form-inline">
-													<%= f.datetime_select :out, {:use_month_numbers => true, :start_year => 2018,:include_blank => true,:date_separator => '&ensp;/&ensp;'}, class: "form-control" %>
+													<%= f.datetime_select :out, {:use_month_numbers => true, :start_year => 2018,:include_blank => true,:date_separator => '&ensp;/&ensp;',:time_separator => '&nbsp;:&nbsp;'}, class: "form-control" %>
 													</div>
 												</td>
 											<td><%= link_to "削除", staff_work_path(params[:staff_id],[@work]),method: :delete ,data: {confirm: '本当に削除しますか??'}, class:"btn btn-outline-danger badge-pill btn-sm float-right" %></td>
@@ -56,10 +56,18 @@
 										<th></th>
 									</thead>
 									<tbody>
-										<td><%= t.datetime_select :break_in, :use_month_numbers => true , :start_year => 2018, :date_separator => '/', class: "form-control" %></td>
+										<td>
+											<div class="form-inline">
+												<%= t.datetime_select :break_in, {:use_month_numbers => true , :start_year => 2018, :date_separator => '&ensp;/&ensp;',:time_separator => '&nbsp;:&nbsp;'}, class: "form-control" %>
+											</div>
+										</td>
 										<td></td>
-										<td><%= t.datetime_select :break_out, :use_month_numbers => true,:include_blank => true,:date_separator => '/', :start_year => 2018, class: "form-control" %></td>
-										<td><%= link_to "削除", staff_work_breaks_path(params[:staff_id],[@work],[@breaks]),method: :delete ,data: {confirm: '本当に削除しますか??'},:date_separator => '/', class:"btn btn-outline-danger badge-pill btn-sm float-right" %></td>
+										<td>
+											<div class="form-inline">
+												<%= t.datetime_select :break_out, {:use_month_numbers => true,:include_blank => true,:date_separator => '&ensp;/&ensp;', :time_separator => '&nbsp;:&nbsp;', :start_year => 2018}, class: "form-control" %>
+											</div>
+										</td>
+										<td><%= link_to "削除", staff_work_breaks_path(params[:staff_id],[@work],[@breaks]),method: :delete ,data: {confirm: '本当に削除しますか??'}, class:"btn btn-outline-danger badge-pill btn-sm float-right" %></td>
 									</tbody>
 								</table>
 							</div>

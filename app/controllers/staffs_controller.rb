@@ -52,7 +52,7 @@ class StaffsController < ApplicationController
     @search = @staff.works.ransack(params[:q])
     @works = @search.result
     @breaks = 0
-    @works.order(:in).each do |workday|
+    @works.order(:in).each do |workday|# 休憩時間合計ransackからの@works参照
       workday.breaks.each do |break_time|
           unless break_time.break_out.blank?
             off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone)

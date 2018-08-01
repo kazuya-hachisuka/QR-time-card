@@ -1,7 +1,7 @@
 <div class="container-fluid py-4">
-	<div class="row">
+	<div class="row justify-content-center">
 			<div class="d-inline-block">
-				<div class="card shadow-lg border-dark ml-2" style="width:18rem;">
+				<div class="card shadow-lg border-dark " style="width:18rem;">
 					<h3 class="card-header text-center font-weight-bold" style="background-color:#fb8303;">
 						<%= @staff.family_name %>
 						<%= @staff.given_name %>
@@ -15,7 +15,7 @@
 						<b><%= @staff.store.store_name %></b>
 					</div>
 				</div>
-			<button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#ModalCenter">スタッフ情報編集</button>
+			<button type="button" class="btn btn-primary mt-3 text-white" data-toggle="modal" data-target="#ModalCenter" style="width:18rem;">スタッフ情報編集</button>
 
 	    	<!-- モーダルの設定 -->
 		    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
@@ -43,7 +43,7 @@
 		    </div>
 			</div>
 
-			<div class="d-inline-block">
+			<div class="d-inline-block mb-5">
 				<div class="card shadow-lg border-dark ml-3" style="width:100%;">
 			    <div class="card-header lead" style="background-color:#fb8303;">
 				    <span class="font-weight-bold"><%= @staff.store.store_name %></span>
@@ -57,27 +57,52 @@
 						</div>
 				  </div>
 
+				  <!-- 深夜帯の勤怠と休憩の計算 -->
+				  <% mid_night_works = 0 %>
+				  <% mid_night_breaks = 0 %>
+		    	<% @works.each do |w| %>
+		    		<% mid_night_works += midnight(w.in,w.out) %>
+		    			<% w.breaks.each do |b| %>
+		    				<% unless b.break_out.blank? %>
+		    					<% mid_night_breaks += midnight(b.break_in,b.break_out) %>
+		    				<% end %>
+		    			<% end %>
+					<% end %>
+
 			    <div class="card-body bg-light">
-				    <span class="card-title font-weight-bold">
+				    <span class="card-title font-weight-bold h3">
 				    	<%= @staff.family_name %>
 					    <%= @staff.given_name %>
 					    <%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
 					   </span>
-					    	<p class="card-text pt-2 border-bottom">合計労働時間  <%= h_mm(totalwork(@works))%></p>
-					    	<p class="card-text border-bottom"> 合計休憩時間 <%= h_mm(@breaks) %></p>
-					    	<p class="card-text border-bottom"> 総労働時間 <%= h_mm(totalwork(@works) - @breaks) %></p>
+				    	<p class="card-text pt-2 border-bottom font-weight-bold h5">
+				    		労働時間合計
+				    		<!-- 実働合計-休憩合計 -->
+				    		<%= h_mm(totalwork(@works) - @breaks) %>
+				    	</p>
+				    	<p class="card-text border-bottom font-weight-bold text-secondary">内訳</p>
+				    	<p class="card-text border-bottom font-weight-bold text-secondary">
+
+				    	 <span>
+				    	 	<% b_time = 0 %>
+				    	 	<% b_time = @breaks - mid_night_breaks %>
+				    	 	実働時間<%= h_mm(totalwork(@works) - mid_night_works - b_time)%>
+				    	 </span>
+				    	 <span>
+				    	 	&emsp;深夜帯<%= h_mm(mid_night_works - mid_night_breaks) %>
+				    	 </span>
+				    	</p>
 		  		</div>
 
 			    <table class="table table-hover">
 			      <thead class="bg-light">
 			        <tr>
 			          <th>編集</th>
-								<th>シフトin</th>
-								<th>シフトout</th>
-								<th>勤務時間</th>
+								<th>出勤</th>
+								<th>退勤</th>
+								<th>勤務時間/<span class="text-secondary">深夜勤務</span></th>
 								<th>休憩時間</th>
-								<th>深夜時間</th>
-								<th>総労働時間</th>
+								<th>実働時間</th>
 			        </tr>
 			      </thead>
 
@@ -85,15 +110,27 @@
 
 						<tbody>
 							<tr>
-								<td><%= link_to 'edit',edit_staff_work_path(@staff,workday.id), class: 'btn btn-outline-info btn-sm' %></th>
-								<td><%= workday.in.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
+								<td>
+									<%= link_to 'edit',edit_staff_work_path(@staff,workday.id), class: 'btn btn-outline-info btn-sm' %>
+								</td>
+								<td>
+									<%= workday.in.strftime('%Y年%m月%d日 %H:%M:%S') %>
+								</td>
 
 							<% if workday.out.present?  %>
 
-								<td><%= workday.out.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
 								<td>
+									<%= workday.out.strftime('%Y年%m月%d日 %H:%M:%S') %>
+
+								</td>
+								<td class="text-center">
 									<% sec = (workday.out.in_time_zone - workday.in.in_time_zone) %>
+									<% sec -= midnight(workday.in,workday.out) %>
 									<%= h_mm(sec) %>
+									<% 	actual_hour = sec + midnight(workday.in,workday.out) %>
+									<span class="text-secondary">
+										/<%= h_mm(midnight(workday.in,workday.out)) %>
+									</span>
 								</td>
 
 							<% else %>
@@ -105,40 +142,43 @@
 
 							<% time = 0 %>
 
+							<% mid_break_time = 0 %>
+
 							<% workday.breaks.each do |break_time| %>
 
 
 								<% unless break_time.break_out.blank? %>
-
+																<!-- 休憩戻り-休憩入 -->
 									<% off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone) %>
 
 									<% time += off_time %>
 
+									<% mid_break_time += midnight(break_time.break_in,break_time.break_out) %>
 								<% end %>
 
 							<% end %>
 
-								<td>
+								<td class="text-center">
 									<% if time == 0 %>
 
-										無し
+										-
 
 									<% else %>
-
+											<!-- 休憩合計 -->
 										<%= h_mm(time) %>
 
 									<% end %>
 
 								</td>
 
-								<td>深夜</td>
-								<td>
+								<td class="text-center">
 									<% if sec == nil %>
 
-										0
+										-
+
 									<% else %>
 
-										<%= h_mm(sec - time) %>
+										<%= h_mm(actual_hour - time) %>
 
 									<% end %>
 								</td>
