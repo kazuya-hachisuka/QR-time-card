@@ -57,10 +57,9 @@
 						</div>
 				  </div>
 
+				  <!-- 深夜帯の勤怠と休憩の計算 -->
 				  <% mid_night_works = 0 %>
 				  <% mid_night_breaks = 0 %>
-
-				  <!-- 深夜帯の勤怠と休憩の計算 -->
 		    	<% @works.each do |w| %>
 		    		<% mid_night_works += midnight(w.in,w.out) %>
 		    			<% w.breaks.each do |b| %>
@@ -83,8 +82,15 @@
 				    	</p>
 				    	<p class="card-text border-bottom font-weight-bold text-secondary">内訳</p>
 				    	<p class="card-text border-bottom font-weight-bold text-secondary">
-				    	 <span>実働時間<%= h_mm(totalwork(@works) - mid_night_works)%></span>
-				    	 <span>&emsp;深夜帯<%= h_mm(mid_night_works) %></span>
+
+				    	 <span>
+				    	 	<% b_time = 0 %>
+				    	 	<% b_time = @breaks - mid_night_breaks %>
+				    	 	実働時間<%= h_mm(totalwork(@works) - mid_night_works - b_time)%>
+				    	 </span>
+				    	 <span>
+				    	 	&emsp;深夜帯<%= h_mm(mid_night_works - mid_night_breaks) %>
+				    	 </span>
 				    	</p>
 		  		</div>
 
@@ -96,7 +102,6 @@
 								<th>退勤</th>
 								<th>勤務時間/<span class="text-secondary">深夜勤務</span></th>
 								<th>休憩時間</th>
-								<!-- <th>深夜時間</th> -->
 								<th>実働時間</th>
 			        </tr>
 			      </thead>
@@ -123,7 +128,9 @@
 									<% sec -= midnight(workday.in,workday.out) %>
 									<%= h_mm(sec) %>
 									<% 	actual_hour = sec + midnight(workday.in,workday.out) %>
-									<span class="text-secondary">/<%= h_mm(midnight(workday.in,workday.out)) %></span>
+									<span class="text-secondary">
+										/<%= h_mm(midnight(workday.in,workday.out)) %>
+									</span>
 								</td>
 
 							<% else %>
@@ -135,18 +142,18 @@
 
 							<% time = 0 %>
 
-							<% m_b_time = 0 %>
+							<% mid_break_time = 0 %>
 
 							<% workday.breaks.each do |break_time| %>
 
 
 								<% unless break_time.break_out.blank? %>
-
+																<!-- 休憩戻り-休憩入 -->
 									<% off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone) %>
 
 									<% time += off_time %>
 
-									<% m_b_time += midnight(break_time.break_in,break_time.break_out) %>
+									<% mid_break_time += midnight(break_time.break_in,break_time.break_out) %>
 								<% end %>
 
 							<% end %>
@@ -157,7 +164,7 @@
 										-
 
 									<% else %>
-
+											<!-- 休憩合計 -->
 										<%= h_mm(time) %>
 
 									<% end %>
@@ -166,10 +173,8 @@
 
 								<td class="text-center">
 									<% if sec == nil %>
-										0
-									<% elsif m_b_time != 0 %>
 
-										<%= h_mm(actual_hour - time - m_b_time) %>
+										-
 
 									<% else %>
 
