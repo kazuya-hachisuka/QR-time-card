@@ -53,7 +53,6 @@ module ApplicationHelper
     work_29 = work_29.to_s + " 5:00:00"
     work_29 = work_29.in_time_zone.tomorrow
 
-
     work_22 = work_in.to_date
     work_22 = work_22.to_s + " 22:00:00"
     work_22 = work_22.in_time_zone
