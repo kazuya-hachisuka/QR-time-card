@@ -73,7 +73,11 @@
 				    <span class="card-title font-weight-bold h3">
 				    	<%= @staff.family_name %>
 					    <%= @staff.given_name %>
+
+					   <% if current_admin.store_id == @staff.store_id || current_admin.is_main_administer == true %>
 					    <%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
+					   <% end %>
+
 					   </span>
 				    	<p class="card-text pt-2 border-bottom font-weight-bold h5">
 				    		労働時間合計

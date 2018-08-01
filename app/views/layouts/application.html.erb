@@ -22,20 +22,23 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">管理者ログイン</h5>
+            <span class="modal-title h5 font-weight-bold text-secondary" id="exampleModalCenterTitle">管理者ログイン</span>
             <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
 
             <% if admin_signed_in? %>
-            <div class="modal-body">
-              <p>ログイン中</p>
+            <div class="modal-body font-weight-bold text-info">
+              <p class="h5">ログイン中</p>
+              <p class="text-center h3">
+                <%= current_admin.family_name %>
+                <%=current_admin.given_name %>さん
+              </p>
             </div>
 
             <div class="modal-footer">
-              <%= link_to "ログアウト",destroy_admin_session_path, class:"btn btn-info", method: :delete %>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+              <%= link_to "ログアウト",destroy_admin_session_path, class:"btn btn-secondary", method: :delete %>
             </div>
 
           <% else %>
@@ -44,8 +47,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                <%= link_to "ログイン画面へ", new_admin_session_path,class:"btn btn-info" %>
+              <%= link_to "ログイン画面へ", new_admin_session_path,class:"btn btn-info" %>
             </div>
 
           <% end %>
