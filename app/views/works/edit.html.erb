@@ -1,0 +1,82 @@
+<div class="container py-2">
+	<div class="row">
+		<span class="border-bottom font-weight-bold h2" ><%= @staff.store.store_name %></span>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="card border-secondary shadow-lg mb-5" style="width:90%;">
+			<span class="card-header font-weight-bold h4" style="background-color:#fb8303;">
+				<%= @staff.family_name %><%= @staff.given_name %>
+				<%= link_to "戻る", staff_path(@staff), class:"btn btn-light btn-sm float-right"%>
+			</span>
+
+				<div class="card-body">
+
+				<%= form_for ([@staff, @work]) do |f| %>
+						<div class="container py-4">
+							<div class="row justify-content-center">
+								<table class="table table-sm">
+									<thead class="thead-light">
+										<tr>
+											<th style="color:#fb8303;">出勤</th>
+											<th></th>
+											<th style="color:#fb8303;">退勤</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<div class="form-inline">
+													<%= f.datetime_select :in, {:use_month_numbers => true, :start_year => 2018, :date_separator => '&ensp;/&ensp;',:time_separator => '&nbsp;:&nbsp;'}, class: "form-control" %>
+													</div>
+												</td>
+											<td></td>
+											<td>
+												<div class="form-inline">
+													<%= f.datetime_select :out, {:use_month_numbers => true, :start_year => 2018,:include_blank => true,:date_separator => '&ensp;/&ensp;',:time_separator => '&nbsp;:&nbsp;'}, class: "form-control" %>
+													</div>
+												</td>
+											<td><%= link_to "削除", staff_work_path(params[:staff_id],[@work]),method: :delete ,data: {confirm: '本当に削除しますか??'}, class:"btn btn-outline-danger badge-pill btn-sm float-right" %></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<%= f.fields_for :breaks do |t| %>
+						<div class="container py-4">
+							<div class="row justify-content-center">
+								<table class="table table-sm">
+									<thead class="thead-light">
+										<th>休憩</th>
+										<th></th>
+										<th>戻り</th>
+										<th></th>
+									</thead>
+									<tbody>
+										<td>
+											<div class="form-inline">
+												<%= t.datetime_select :break_in, {:use_month_numbers => true , :start_year => 2018, :date_separator => '&ensp;/&ensp;',:time_separator => '&nbsp;:&nbsp;'}, class: "form-control" %>
+											</div>
+										</td>
+										<td></td>
+										<td>
+											<div class="form-inline">
+												<%= t.datetime_select :break_out, {:use_month_numbers => true,:include_blank => true,:date_separator => '&ensp;/&ensp;', :time_separator => '&nbsp;:&nbsp;', :start_year => 2018}, class: "form-control" %>
+											</div>
+										</td>
+										<td><%= link_to "削除", staff_work_breaks_path(params[:staff_id],[@work],[@breaks]),method: :delete ,data: {confirm: '本当に削除しますか??'}, class:"btn btn-outline-danger badge-pill btn-sm float-right" %></td>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<% end %>
+
+					<%= f.submit '更新', class:"btn btn-outline-info btn-block mb-2", method: :patch %>
+				<% end %>
+
+		</div>
+	</div>
+</div>

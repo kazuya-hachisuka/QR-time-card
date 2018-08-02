@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  family_name: MyString
+  given_name: MyString
+  family_name_kana: MyString
+  given_name_kana: MyString
+  qrcode: MyString
+  status: 1
+  store_id: 1
+  work_id: 1
+
+two:
+  family_name: MyString
+  given_name: MyString
+  family_name_kana: MyString
+  given_name_kana: MyString
+  qrcode: MyString
+  status: 1
+  store_id: 1
+  work_id: 1

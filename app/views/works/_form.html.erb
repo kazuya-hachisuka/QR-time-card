@@ -1,0 +1,48 @@
+<div class="container py-4">
+	<div class="row justify-content-center">
+	<%= form_for work, url: staff_work_add_create_path([staff],[work]), method: :post do |f| %>
+		<div class="card border-secondary shadow-lg">
+			<span class="card-header text-white text-center font-weight-bold h3" style="background-color:#F08300;">
+			<%= staff.family_name %><%= staff.given_name %>の勤怠追加
+		</span>
+				<div class="card-body bg-light">
+					<div class="card-text font-weight-bold h5"><%= @staff.store.store_name %></div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="text-info h5 font-weight-bold">出勤</th>
+								<th class="text-info h5 font-weight-bold">退勤</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<span class="form-inline">
+										<%= f.datetime_select :in, {:use_month_numbers => true, :start_year => 2018, :date_separator => '&ensp;/&ensp;',:time_separator => '&nbsp;:&nbsp;',:include_blank => true}, class: "form-control" %>
+									</span>
+								</td>
+								<td>
+									<span class="form-inline">
+									<%= f.datetime_select :out, {:use_month_numbers => true, :start_year => 2018, :date_separator => '&ensp;/&ensp;',:time_separator => '&nbsp;:&nbsp;',:include_blank => true}, class: "form-control" %>
+									</span>
+								</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+					<div id="break">
+						<%= f.fields_for :breaks do |break_time| %>
+							<%= render 'works/break_fields', f: break_time %>
+						<% end %>
+						<div id="links" >
+							<%= link_to_add_association '+休憩',f, :breaks,class:"btn btn-outline-warning btn-sm " %>
+							<%= f.submit '勤怠追加', class:"btn btn-outline-primary btn-sm float-right" %>
+						</div>
+							<%#= link_to_remove_association "remove", f %> <!-- ボタン押しても反応しない -->
+					</div>
+				</div>
+		</div>
+	<% end %>
+	</div>
+</div>

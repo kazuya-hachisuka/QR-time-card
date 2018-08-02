@@ -1,0 +1,9 @@
+<div class="container py-5">
+	<div class="row justify-content-center">
+		<p class="flash-message text-danger text-center">
+    	<%= flash[:add_work_faled] %>
+  	</p>
+		<%= render 'form', work: @work, staff: @staff %>
+		<%= link_to 'Back', staff_path(@staff), class: "btn btn-outline-dark btn-block col-3" %>
+	</div>
+</div>
