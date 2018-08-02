@@ -11,15 +11,24 @@ class StaffsController < ApplicationController
 
   def create
   	@staff = Staff.new(staff_params)
-  	@staff.save
-  	puts @staff.id
-  	redirect_to staff_path(@staff.id)
+  	if @staff.save
+  	 redirect_to staff_path(@staff.id)
+     flash[:staff_created] = "#{@staff.family_name}#{@staff.given_name}を追加しました。"
+    else
+      redirect_to new_staff_path
+      flash[:staff_create_faled] = "作成できませんでした。入力内容を確認してください。"
+    end
   end
 
   def update
     staff = Staff.find(params[:id])
-    staff.update(staff_params)
-    redirect_to staff_path
+    if staff.update(staff_params)
+      redirect_to staff_path
+      flash[:staff_updated] = "情報を更新しました。"
+    else
+      redirect_to staff_path
+      flash[:staff_update_faled] = "情報を更新出来ませんでした。"
+    end
   end
 
   def show
@@ -45,10 +54,10 @@ class StaffsController < ApplicationController
     @breaks = 0
     @works.order(:in).each do |workday|# 休憩時間合計ransackからの@works参照
       workday.breaks.each do |break_time|
-          unless break_time.break_out.blank?
-            off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone)
-            @breaks += off_time
-          end
+        unless break_time.break_out.blank?
+          off_time = (break_time.break_out.in_time_zone - break_time.break_in.in_time_zone)
+          @breaks += off_time
+        end
       end
     end
   end

@@ -1,21 +1,31 @@
 <div class="container-fluid py-4">
+	<p class="flash-message text-info">
+		<%= flash[:staff_created] %>
+		<%= flash[:staff_updated] %>
+		<%= flash[:work_updated] %>
+	</p>
+	<p class="flash-message text-primary"><%= flash[:add_work_created] %></p>
+	<p class="flash-message text-danger">
+		<%= flash[:staff_update_faled] %>
+		<%= flash[:work_update_faled] %>
+	</p>
 	<div class="row justify-content-center">
-			<div class="d-inline-block">
-				<div class="card shadow-lg border-dark " style="width:18rem;">
-					<h3 class="card-header text-center font-weight-bold" style="background-color:#fb8303;">
-						<%= @staff.family_name %>
-						<%= @staff.given_name %>
-					</h3>
+		<div class="d-inline-block">
+			<div class="card shadow-lg border-dark " style="width:18rem;">
+				<h3 class="card-header text-center font-weight-bold" style="background-color:#fb8303;">
+					<%= @staff.family_name %>
+					<%= @staff.given_name %>
+				</h3>
 
-					<div class="card-body text-center">
-						<%=  image_tag @qrpng ,class:"img-thumbnail mx-auto border-dark my-5", :size =>'250x250' %>
-					</div>
-					<div class="card-footer text-center">
-						<p>所属店舗</p>
-						<p class="h5 font-weight-bold"><%= @staff.store.store_name %></p>
-					</div>
+				<div class="card-body text-center">
+					<%=  image_tag @qrpng ,class:"img-thumbnail mx-auto border-dark my-5", :size =>'250x250' %>
 				</div>
-			<button type="button" class="btn btn-info mt-3 text-white" data-toggle="modal" data-target="#ModalCenter" style="width:18rem;">スタッフ情報編集</button>
+				<div class="card-footer text-center">
+					<p>所属店舗</p>
+					<p class="h5 font-weight-bold"><%= @staff.store.store_name %></p>
+				</div>
+			</div>
+			<button type="button" class="btn btn-info mt-3 mb-5 text-white" data-toggle="modal" data-target="#ModalCenter" style="width:18rem;">スタッフ情報編集</button>
 
 	    	<!-- モーダルの設定 -->
 		    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
@@ -61,7 +71,9 @@
 				  <% mid_night_works = 0 %>
 				  <% mid_night_breaks = 0 %>
 		    	<% @works.each do |w| %>
-		    		<% mid_night_works += midnight(w.in,w.out) %>
+		    		<% if @works == [] %>
+		    			<% mid_night_works += midnight(w.in,w.out) %>
+		    		<% end %>
 		    			<% w.breaks.each do |b| %>
 		    				<% unless b.break_out.blank? %>
 		    					<% mid_night_breaks += midnight(b.break_in,b.break_out) %>
@@ -101,7 +113,7 @@
 			          <th>編集</th>
 								<th>出勤</th>
 								<th>退勤</th>
-								<th>勤務時間/<span class="text-secondary">深夜勤務</span></th>
+								<th class="text-center">勤務時間/<span class="text-secondary">深夜勤務</span></th>
 								<th>休憩時間</th>
 								<th>実働時間</th>
 			        </tr>
@@ -136,8 +148,8 @@
 
 							<% else %>
 
-								<td>出勤中</td>
-								<td>未確定</td>
+								<td class="text-success text-center font-weight-bold">出勤中</td>
+								<td class="text-warning text-center font-weight-bold">未確定</td>
 
 							<% end %>
 

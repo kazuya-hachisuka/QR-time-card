@@ -1,4 +1,6 @@
 <div class="container py-5">
+	<p class="flash-message text-info"><%= flash[:store_updated] %></p>
+	<p class="flash-message text-danger"><%= flash[:store_update_faled] %></p>
 	<div class="row justify-content-center">
 		<div class="card w-100 shadow-lg">
 			<div class="card-header" style="background-color:#fb8303;">
@@ -93,7 +95,7 @@
 
 					<% if current_admin.is_main_administer == true %>
 
-	          <button type="button" class="btn btn-outline-info float-right" data-toggle="modal" data-target="#ModalCenter">店舗名編集</button>
+	          <button type="button" class="btn btn-outline-info float-right" data-toggle="modal" data-target="#ModalCenter">店舗編集</button>
 	          <!-- モーダルの設定 -->
 	          <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
 	            <div class="modal-dialog modal-dialog-centered" role="document">
