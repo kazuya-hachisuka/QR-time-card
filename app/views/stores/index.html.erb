@@ -1,42 +1,38 @@
  <div class="container pt-5">
+  <p class="flash-message text-info"><%= flash[:store_created] %></p>
   <div class="row justify-content-center">
-      <div class="card border-secondary shadow-lg m-2 w-100">
-        <div class="card-header h3 font-weight-bold" style="background-color:#fb8303;">店舗一覧
-        </div>
-        <div class="card-body">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th class="h5 font-weight-bold">店舗名</th>
-                <th class="h5 font-weight-bold">在籍スタッフ数</th>
-                <th></th>
-              </tr>
-            </thead>
+    <div class="card border-secondary shadow-lg m-2 w-100">
+      <div class="card-header h3 font-weight-bold" style="background-color:#fb8303;">店舗一覧
+      </div>
+      <div class="card-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th class="h5 font-weight-bold">店舗名</th>
+              <th class="h5 font-weight-bold">在籍スタッフ数</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+          <% @store.each do |store|%>
+              <th><%= store.store_name%></th>
+            <% if store.staffs.present? %>
+              <th><%= store.staffs.count %>名</th>
 
-            <tbody>
-              <tr>
-            <% @store.each do |store|%>
-                <th><%= store.store_name%></th>
-              <% if store.staffs.present? %>
-                <th><%= store.staffs.count %>名</th>
+            <% else %>
 
-              <% else %>
+              <th>-名</th>
 
-                <th>-名</th>
-
-              <% end %>
+            <% end %>
 
               <td><%= link_to "店舗詳細",store_path(store.id), class:"btn btn-info btn-sm" %></td>
 
-              </tr>
-            <% end %>
-
-
-            </tbody>
-
-          </table>
-        </div>
-
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
       </div>
+    </div>
   </div>
 </div>

@@ -36,7 +36,7 @@ module ApplicationHelper
     return @breaks
 	end
 
-  def midnight(work_in,work_out)
+  def midnight(work_in, work_out)
     work_5 = work_in.to_date
     work_5 = work_5.to_s + " 5:00:00"
     work_5 = work_5.in_time_zone

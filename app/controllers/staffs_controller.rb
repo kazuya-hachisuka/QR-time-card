@@ -13,15 +13,22 @@ class StaffsController < ApplicationController
   	@staff = Staff.new(staff_params)
   	if @staff.save
   	 redirect_to staff_path(@staff.id)
+     flash[:staff_created] = "#{@staff.family_name}#{@staff.given_name}を追加しました。"
     else
       redirect_to new_staff_path
+      flash[:staff_create_faled] = "作成できませんでした。入力内容を確認してください。"
     end
   end
 
   def update
     staff = Staff.find(params[:id])
-    staff.update(staff_params)
-    redirect_to staff_path
+    if staff.update(staff_params)
+      redirect_to staff_path
+      flash[:staff_updated] = "情報を更新しました。"
+    else
+      redirect_to staff_path
+      flash[:staff_update_faled] = "情報を更新出来ませんでした。"
+    end
   end
 
   def show

@@ -11,8 +11,13 @@ class StoresController < ApplicationController
 
 	def create
 		@store = Store.new(params_store)
-		@store.save
-		redirect_to stores_path
+		if @store.save
+			redirect_to stores_path
+			flash[:store_created] = "#{@store.store_name}店を追加しました。"
+		else
+			redirect_to new_store_path
+			flash[:store_create_faled] = "追加出来ませんでした。再度、入力して下さい。"
+		end
 	end
 
 	def show
@@ -49,8 +54,13 @@ class StoresController < ApplicationController
 
 	def update
 		@store = Store.find(params[:id])
-		@store.update(params_store)
-		redirect_to  stores_path
+		if @store.update(params_store)
+			redirect_to  store_path
+			flash[:store_updated] = "店舗情報を更新しました。"
+		else
+			redirect_to  store_path
+			flash[:store_update_faled] = "店舗情報を更新出来ませんでした。"
+		end
 	end
 
 	def destroy

@@ -18,6 +18,7 @@ class WorksController < ApplicationController
 		@work = Work.find(params[:id])
 		@work.update(params_work)
 		redirect_to staff_path(params[:staff_id])
+		flash[:work_updated] = "勤怠情報を更新しました。"
 	end
 
 	def create
@@ -94,6 +95,7 @@ class WorksController < ApplicationController
 		@work.staff_id = @staff.id
 		if @work.save
 			redirect_to staff_path(params[:staff_id])
+			flash[:add_work_created] = "#{@staff.family_name}#{@staff.given_name}の勤怠を追加しました。"
 		else
 			flash[:add_work_faled] = "入力項目を確認して下さい。"
 			render :add_work
