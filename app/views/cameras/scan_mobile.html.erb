@@ -1,4 +1,5 @@
 <!-- jsQR モバイル用 -->
+<%= javascript_include_tag "jsQR.js" %>
 <div class="container">
   <div class="row justify-content-center">
     <h1>QRコードをかざして下さい</h1>
@@ -23,7 +24,7 @@
       </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
   var video = document.createElement("video");
   var canvasElement = document.getElementById("canvas");
   var canvas = canvasElement.getContext("2d");
