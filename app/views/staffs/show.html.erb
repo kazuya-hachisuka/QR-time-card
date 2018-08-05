@@ -10,8 +10,8 @@
 		<%= flash[:work_update_faled] %>
 	</p>
 	<div class="row justify-content-center">
-		<div class="d-inline-block">
-			<div class="card shadow-lg border-dark " style="width:18rem;">
+		<div class="d-inline-block ml-sm-2">
+			<div class="card shadow-lg border-dark " style="width:100%">
 				<h3 class="card-header text-center font-weight-bold" style="background-color:#fb8303;">
 					<%= @staff.family_name %>
 					<%= @staff.given_name %>
@@ -25,89 +25,87 @@
 					<p class="h5 font-weight-bold"><%= @staff.store.store_name %></p>
 				</div>
 			</div>
-			<button type="button" class="btn btn-info mt-3 mb-5 text-white" data-toggle="modal" data-target="#ModalCenter" style="width:18rem;">スタッフ情報編集</button>
+				<button type="button" class="btn btn-info mt-3 mb-5 text-white" data-toggle="modal" data-target="#ModalCenter" style="width:18rem;">スタッフ情報編集</button>
 
-	    	<!-- モーダルの設定 -->
-		    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-		      <div class="modal-dialog modal-dialog-centered" role="document">
-		        <div class="modal-content">
-		          <div class="modal-header">
-		            <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
-		              <span aria-hidden="true">&times;</span>
-		            </button>
-		          </div>
+				<!-- モーダルの設定 -->
+				<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 
-		          <div class="modal-body">
+							<div class="modal-body">
 
-		          	<%= render 'staffs/edit', staff:@staff %>
+								<%= render 'staffs/edit', staff:@staff %>
 
-		          </div>
+							</div>
 
-		          <div class="modal-footer">
-		              <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-		          </div>
-
-		        </div>
-
-		      </div>
-		    </div>
-			</div>
-
-			<div class="d-inline-block mb-5">
-				<div class="card shadow-lg border-dark ml-3" style="width:100%;">
-			    <div class="card-header lead" style="background-color:#fb8303;">
-				    <span class="font-weight-bold h3"><%= @staff.store.store_name %></span>
-				    <div class="form-inline float-right">
-					  	<%= search_form_for @search, url:staff_path do |f| %>
-								<%= f.date_select :in_gteq, {include_blank: true, use_month_numbers: true, date_separator: '&nbsp;/&nbsp;', start_year: 2018,}, class: "form-control" %> 〜
-  							<%= f.date_select :in_lteq, {use_month_numbers: true, date_separator: '&nbsp;/&nbsp;', default: Date.today,start_year: 2018}, class: "form-control" %>
-								<%= f.submit "検索",class:"btn btn-secondary btn-sm" %>
-								<%= link_to '検索条件クリア', request.path,class:"btn btn-outline-secondary btn-sm" %>
-							<% end %>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+							</div>
 						</div>
-				  </div>
+					</div>
+				</div>
+		</div>
 
-				  <!-- 深夜帯の勤怠と休憩の計算 -->
-				  <% mid_night_works = 0 %>
-				  <% mid_night_breaks = 0 %>
-		    	<% @works.each do |w| %>
-		    		<% if @works == [] %>
-		    			<% mid_night_works += midnight(w.in,w.out) %>
-		    		<% end %>
-		    			<% w.breaks.each do |b| %>
-		    				<% unless b.break_out.blank? %>
-		    					<% mid_night_breaks += midnight(b.break_in,b.break_out) %>
-		    				<% end %>
-		    			<% end %>
+		<div class="d-inline-block mb-5 col-sm">
+			<div class="card shadow-lg border-dark ml-sm-2" style="width:100%;">
+				<div class="card-header lead" style="background-color:#fb8303;">
+					<span class="font-weight-bold h3"><%= @staff.store.store_name %></span>
+					<div class="form-inline float-right">
+						<%= search_form_for @search, url:staff_path do |f| %>
+							<%= f.date_select :in_gteq, {include_blank: true, use_month_numbers: true, date_separator: '&nbsp;/&nbsp;', start_year: 2018,}, class: "form-control" %> 〜
+							<%= f.date_select :in_lteq, {use_month_numbers: true, date_separator: '&nbsp;/&nbsp;', default: Date.today,start_year: 2018}, class: "form-control" %>
+							<%= f.submit "検索",class:"btn btn-secondary btn-sm" %>
+							<%= link_to '検索条件クリア', request.path,class:"btn btn-outline-secondary btn-sm" %>
+						<% end %>
+					</div>
+				</div>
+
+				<!-- 深夜帯の勤怠と休憩の計算 -->
+				<% mid_night_works = 0 %>
+				<% mid_night_breaks = 0 %>
+				<% @works.each do |w| %>
+					<% if @works == [] %>
+						<% mid_night_works += midnight(w.in,w.out) %>
+					<% end %>
+						<% w.breaks.each do |b| %>
+							<% unless b.break_out.blank? %>
+								<% mid_night_breaks += midnight(b.break_in,b.break_out) %>
+							<% end %>
+						<% end %>
+				<% end %>
+
+				<div class="card-body bg-light">
+					<span class="card-title font-weight-bold h3">
+						<%= @staff.family_name %>
+						<%= @staff.given_name %>
+					</span>
+
+					<% if current_admin.store_id == @staff.store_id || current_admin.is_main_administer == true %>
+						<span>
+							<%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
+						</span>
 					<% end %>
 
-			    <div class="card-body bg-light">
-				    <span class="card-title font-weight-bold h3">
-				    	<%= @staff.family_name %>
-					    <%= @staff.given_name %>
-					  </span>
-
-					   <% if current_admin.store_id == @staff.store_id || current_admin.is_main_administer == true %>
-						   <span>
-						    <%= link_to "勤怠追加", staff_work_add_path(params[:id]), class:"btn btn-outline-warning btn-sm float-right" %>
-						   </span>
-					   <% end %>
-
-				    	<p class="card-text mt-4 border-bottom font-weight-bold h5">
-				    		労働時間合計
-				    		<!-- 実働合計-休憩合計 -->
-				    		<%= h_mm(totalwork(@works) - @breaks) %>
-				    	</p>
-				    	<p class="card-text border-bottom font-weight-bold text-secondary">内訳</p>
-				    	<p class="card-text border-bottom font-weight-bold text-secondary">
-				    	 	<% b_time = 0 %>
-				    	 	<% b_time = @breaks - mid_night_breaks %>
-				    	 	実働時間<%= h_mm(totalwork(@works) - mid_night_works - b_time)%>
-				    	 	&emsp;深夜帯<%= h_mm(mid_night_works - mid_night_breaks) %>
-				    	</p>
-		  		</div>
-
-			    <table class="table table-hover">
+						<p class="card-text mt-4 border-bottom font-weight-bold h5">
+							労働時間合計
+							<!-- 実働合計-休憩合計 -->
+							<%= h_mm(totalwork(@works) - @breaks) %>
+						</p>
+						<p class="card-text border-bottom font-weight-bold text-secondary">内訳</p>
+						<p class="card-text border-bottom font-weight-bold text-secondary">
+							<% b_time = 0 %>
+							<% b_time = @breaks - mid_night_breaks %>
+							実働時間<%= h_mm(totalwork(@works) - mid_night_works - b_time)%>
+							&emsp;深夜帯<%= h_mm(mid_night_works - mid_night_breaks) %>
+						</p>
+				</div>
+				<div class="table-responsive-sm">
+					<table class="table table-hover">
 			      <thead class="bg-light">
 			        <tr>
 			          <th>編集</th>
@@ -201,7 +199,8 @@
 
 						<% end %>
 					</table>
-		  	</div>
+				</div>
 			</div>
+		</div>
 	</div>
 </div>
