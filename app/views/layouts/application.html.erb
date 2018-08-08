@@ -1,165 +1,164 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>QR-TimeCard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= csrf_meta_tags %>
+	<head>
+		<title>QR-TimeCard</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <!-- <script type="text/javascript" src="instascan.min.js"></script> -->
-  </head>
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+	</head>
 
-  <body>
+	<body>
 <header>
 	<nav class="navbar navbar-expand-lg" style="background-color: #ff8e00;">
-    <!-- 切り替えボタンの設定 -->
-    <a class="text-monospace text-dark" href="#" data-toggle="modal" data-target="#exampleModalCenter">
-      <span class="h4">QR-TimeCard</span>
-    </a>
+		<!-- 切り替えボタンの設定 -->
+		<a class="text-monospace text-dark" href="#" data-toggle="modal" data-target="#exampleModalCenter">
+			<span class="h4">QR-TimeCard</span>
+		</a>
 
-    <!-- モーダルの設定 -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <span class="modal-title h5 font-weight-bold text-secondary" id="exampleModalCenterTitle">管理者ログイン</span>
-            <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+	<!-- モーダルの設定 -->
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<span class="modal-title h5 font-weight-bold text-secondary text-center" id="exampleModalCenterTitle">管理者ログイン</span>
+						<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
 
-            <% if admin_signed_in? %>
-            <div class="modal-body font-weight-bold ">
-              <p class="h5 text-success">ログイン中</p>
-              <p class="text-center h3 font-weight-bold ">
-                <span class="border-bottom"><%= current_admin.family_name %>
-                <%=current_admin.given_name %>さん</span>
-              </p>
-            </div>
+						<% if admin_signed_in? %>
+						<div class="modal-body font-weight-bold ">
+							<p class="h5 text-success ">ログイン中</p>
+							<p class="text-center h3 font-weight-bold ">
+								<span class="border-bottom"><%= current_admin.family_name %>
+								<%=current_admin.given_name %>さん</span>
+							</p>
+						</div>
 
-            <div class="modal-footer">
-              <%= link_to "ログアウト",destroy_admin_session_path, class:"btn btn-secondary", method: :delete %>
-            </div>
+						<div class="modal-footer">
+							<%= link_to "ログアウト",destroy_admin_session_path, class:"btn btn-secondary", method: :delete %>
+						</div>
 
-          <% else %>
-            <div class="modal-body">
-              <p class="h5 text-info text-center">管理者ですか？</p>
-            </div>
+					<% else %>
+						<div class="modal-body">
+							<p class="h5 text-info text-center">管理者ですか？</p>
+						</div>
 
-            <div class="modal-footer">
-              <%= link_to "ログイン画面へ", new_admin_session_path,class:"btn btn-info" %>
-            </div>
+						<div class="modal-footer">
+							<%= link_to "ログイン画面へ", new_admin_session_path,class:"btn btn-info" %>
+						</div>
 
-          <% end %>
-        </div>
+					<% end %>
+				</div>
 
-      </div>
-    </div>
+			</div>
+		</div>
 
-  <% if admin_signed_in? %>
+	<% if admin_signed_in? %>
 
-    <% if current_admin.is_main_administer == true %>
+		<% if current_admin.is_main_administer == true %>
 
-      <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
-        <span class="navbar-toggler-icon my-toggler"></span>
-      </button>
+			<button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
+				<span class="navbar-toggler-icon my-toggler"></span>
+			</button>
 
-      <div id="menu" class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">店舗メニュー</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <span class="dropdown-item font-weight-bold">
-                <%= link_to "店舗一覧", stores_path,class:"nav-link text-dark" %>
-              </span>
-              <span class="dropdown-item font-weight-bold">
-                <%= link_to "店舗追加", new_store_path, class:"nav-link text-dark" %>
-              </span>
-            </div>
-          </li><!-- ./dropdown-menu -->
+			<div id="menu" class="collapse navbar-collapse">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">店舗メニュー</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<span class="dropdown-item font-weight-bold">
+								<%= link_to "店舗一覧", stores_path,class:"nav-link text-dark" %>
+							</span>
+							<span class="dropdown-item font-weight-bold">
+								<%= link_to "店舗追加", new_store_path, class:"nav-link text-dark" %>
+							</span>
+						</div>
+					</li><!-- ./dropdown-menu -->
 
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">スタッフメニュー</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <span class="dropdown-item font-weight-bold">
-                <%= link_to "スタッフ一覧", staffs_path, class:"nav-link text-dark" %>
-              </span>
-              <span class="dropdown-item font-weight-bold">
-                <%= link_to "スタッフ追加", new_staff_path, class:"nav-link text-dark" %>
-              </span>
-            </div>
-          </li><!-- ./dropdown-menu -->
+					<li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">スタッフメニュー</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<span class="dropdown-item font-weight-bold">
+								<%= link_to "スタッフ一覧", staffs_path, class:"nav-link text-dark" %>
+							</span>
+							<span class="dropdown-item font-weight-bold">
+								<%= link_to "スタッフ追加", new_staff_path, class:"nav-link text-dark" %>
+							</span>
+						</div>
+					</li><!-- ./dropdown-menu -->
 
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">管理者メニュー</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <span class="dropdown-item font-weight-bold">
-                <%= link_to "管理者一覧", admins_path, class:"nav-link text-dark" %>
-              </span>
-              <span class="dropdown-item font-weight-bold">
-                <%= link_to "管理者追加", new_admin_registration_path, class:"nav-link text-dark" %>
-              </span>
-            </div>
-          </li><!-- ./dropdown-menu -->
-        </ul>
-      </div>
+					<li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">管理者メニュー</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<span class="dropdown-item font-weight-bold">
+								<%= link_to "管理者一覧", admins_path, class:"nav-link text-dark" %>
+							</span>
+							<span class="dropdown-item font-weight-bold">
+								<%= link_to "管理者追加", new_admin_registration_path, class:"nav-link text-dark" %>
+							</span>
+						</div>
+					</li><!-- ./dropdown-menu -->
+				</ul>
+			</div>
 
-    <% else %>
+		<% else %>
 
-      <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
-        <span class="navbar-toggler-icon my-toggler"></span>
-      </button>
+			<button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
+				<span class="navbar-toggler-icon my-toggler"></span>
+			</button>
 
-      <div id="menu" class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item font-weight-bold">
-            <%= link_to "店舗一覧", stores_path,class:"nav-link text-dark" %>
-          </li>
-          <li class="nav-item font-weight-bold">
-            <%= link_to "スタッフ追加", new_staff_path, class:"nav-link text-dark" %>
-          </li>
-          <li class="nav-item font-weight-bold"><%= link_to "管理者一覧", admins_path, class:"nav-link text-dark" %>
-          </li>
-        </ul>
-      </div>
+			<div id="menu" class="collapse navbar-collapse">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item font-weight-bold">
+						<%= link_to "店舗一覧", stores_path,class:"nav-link text-dark" %>
+					</li>
+					<li class="nav-item font-weight-bold">
+						<%= link_to "スタッフ追加", new_staff_path, class:"nav-link text-dark" %>
+					</li>
+					<li class="nav-item font-weight-bold"><%= link_to "管理者一覧", admins_path, class:"nav-link text-dark" %>
+					</li>
+				</ul>
+			</div>
 
-   <% end %>
-  <% end %>
+	 <% end %>
+	<% end %>
 
 </nav>
 
 </header>
 
-    <%= yield %>
+		<%= yield %>
 
 
 
 <footer class="fixed-bottom" style="background-color:#ff8e00;">
-  <div class="container">
-    <div class="row">
-    	<span class="text-monospace m-2">QR-TimeCard</span>
-      <!-- <br> -->
-      <!-- デバッグ -->
-      <!-- <div class="container">
-        <%# if Rails.env.development?%>
-          <%#= debug(params) %>
-        <%# end %> -->
-      <!-- </div> -->
-    </div>
-  </div>
+	<div class="container">
+		<div class="row">
+			<span class="text-monospace m-2">QR-TimeCard</span>
+			<!-- <br> -->
+			<!-- デバッグ -->
+			<!-- <div class="container">
+				<%# if Rails.env.development?%>
+					<%#= debug(params) %>
+				<%# end %> -->
+			<!-- </div> -->
+		</div>
+	</div>
 </footer>
 <!-- <script type="text/javascript"  src="javascripts/clock.js"></script> -->
 <script type="text/javascript">
-	var time;
+var time;
 var clock = document.getElementById("clock")
 function main() {
-  time = new Date();
-  clock.innerHTML = String(("0" + time.getHours()).slice(-2)+":"
-    +("0" + time.getMinutes()).slice(-2)+":"
-    +("0" + time.getSeconds()).slice(-2))
-    .bold().fontsize(12);
-  setTimeout(main, 1000-time.getMilliseconds());
+	time = new Date();
+	clock.innerHTML = String(("0" + time.getHours()).slice(-2)+":"
+		+("0" + time.getMinutes()).slice(-2)+":"
+		+("0" + time.getSeconds()).slice(-2))
+		.bold().fontsize(12);
+	setTimeout(main, 1000-time.getMilliseconds());
 }
 main();
 
@@ -167,20 +166,13 @@ var today;
 var day = document.getElementById("day")
 var week = '日月火水木金土'[new Date().getDay()];
 function sub() {
-  today = new Date();
-  day.innerHTML = String(today.getFullYear()+"年"
-  +(today.getMonth()+1)+"月"
-  +("0" + today.getDate()).slice(-2)+"日"
-  +week+"曜日");
+	today = new Date();
+	day.innerHTML = String(today.getFullYear()+"年"
+	+(today.getMonth()+1)+"月"
+	+("0" + today.getDate()).slice(-2)+"日"
+	+week+"曜日");
 }
 sub();
 </script>
 </body>
 </html>
-
-
-
-
-
-
-

@@ -2,7 +2,7 @@
 <table class="table table-sm">
 	<p>
 		<% @staff.family_name %>
-	      	<% @staff.given_name %>
+					<% @staff.given_name %>
 	</p>
 	<thead>
 		<tr>
@@ -48,8 +48,8 @@
 						<% time += sec %>
 					<% end %>
 
-  				<%= h_mm(time) %>
-  				<!-- /<#%= time %> -->
+					<%= h_mm(time) %>
+					<!-- /<#%= time %> -->
 				</td>
 				<td>深夜</td>
 				<td><%= h_mm(sec - time) %></td>
