@@ -1,0 +1,19 @@
+current directory: /vagrant/QR-time-card/vendor/bundle/ruby/2.5.0/gems/bindex-0.5.0/ext/bindex
+/usr/bin/ruby2.5 -r ./siteconf20190407-1926-1qspmfg.rb extconf.rb
+creating Makefile
+
+current directory: /vagrant/QR-time-card/vendor/bundle/ruby/2.5.0/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" clean
+make: Warning: File 'Makefile' has modification time 0.19 s in the future
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+current directory: /vagrant/QR-time-card/vendor/bundle/ruby/2.5.0/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR="
+make: Warning: File 'Makefile' has modification time 0.18 s in the future
+compiling cruby.c
+linking shared-object bindex/cruby.so
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+current directory: /vagrant/QR-time-card/vendor/bundle/ruby/2.5.0/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 cruby.so ./.gem.20190407-1926-1y6yjwx/bindex

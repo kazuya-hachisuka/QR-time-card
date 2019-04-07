@@ -1,0 +1,25 @@
+current directory: /vagrant/QR-time-card/vendor/bundle/ruby/2.5.0/gems/byebug-10.0.2/ext/byebug
+/usr/bin/ruby2.5 -r ./siteconf20190407-1926-o7g2zx.rb extconf.rb
+creating Makefile
+
+current directory: /vagrant/QR-time-card/vendor/bundle/ruby/2.5.0/gems/byebug-10.0.2/ext/byebug
+make "DESTDIR=" clean
+make: Warning: File 'Makefile' has modification time 0.057 s in the future
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+current directory: /vagrant/QR-time-card/vendor/bundle/ruby/2.5.0/gems/byebug-10.0.2/ext/byebug
+make "DESTDIR="
+make: Warning: File 'Makefile' has modification time 0.042 s in the future
+compiling breakpoint.c
+compiling byebug.c
+compiling context.c
+compiling locker.c
+compiling threads.c
+linking shared-object byebug/byebug.so
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+current directory: /vagrant/QR-time-card/vendor/bundle/ruby/2.5.0/gems/byebug-10.0.2/ext/byebug
+make "DESTDIR=" install
+make: Warning: File 'byebug.so' has modification time 0.65 s in the future
+/usr/bin/install -c -m 0755 byebug.so ./.gem.20190407-1926-1hx2lif/byebug
+make: warning:  Clock skew detected.  Your build may be incomplete.
