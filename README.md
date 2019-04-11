@@ -1,26 +1,16 @@
 # README
 
-## on AWS now
+# Name
+## QR-TimeCard
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Overview
+QRコードを使用しての勤怠管理アプリ
 
-Things you may want to cover:
+# Description
+スタッフを登録するとQRコードを生成し、デバイスのカメラにかざすと出退勤画面遷移する。
+出退勤はボタンをクリックするだけで勤怠を記録することが出来る。
+深夜勤務時間も算出することが出来る。
 
-* Ruby version
+# Demo
+https://qr-timecard.work/
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
