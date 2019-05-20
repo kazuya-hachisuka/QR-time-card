@@ -1,7 +1,7 @@
 # README
-
-# Name
-## QR-TimeCard
+QR-TimeCard
+# Demo
+https://qr-timecard.work/
 
 # Overview
 QRコードを使用しての勤怠管理アプリ
@@ -11,6 +11,11 @@ QRコードを使用しての勤怠管理アプリ
 出退勤はボタンをクリックするだけで勤怠を記録することが出来る。
 深夜勤務時間も算出することが出来る。
 
-# Demo
-https://qr-timecard.work/
-
+* Ruby
+* Ruby on Rails
+* HTML5
+* CSS3
+* javascript
+* Bootstrap4
+* MySQL
+* AWS
